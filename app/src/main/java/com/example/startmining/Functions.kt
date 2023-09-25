@@ -72,7 +72,14 @@ fun TotalPayout() {
 }
 
 fun NextPayout(): String {
-    val days2wait = Days2ReachedPayout()
+    val earnings = Datas.earnings
+    val rewards = Datas.live_rewards
+    if (earnings == 0F){
+        return "NaN"
+    }
+    val payout = 0.005
+
+    val days2wait = (payout - rewards) / earnings
     val payout_day = LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
     Datas.next_payout = "${payout_day.dayOfMonth}/${payout_day.monthValue}"
     return Datas.next_payout
@@ -82,11 +89,11 @@ fun Days2ReachedPayout(): String {
     val earnings = Datas.earnings
     val rewards = Datas.live_rewards
     if (earnings == 0F){
-        return "0"
+        return "NaN"
     }
     val payout = 0.005
 
-    val days2wait = (payout - rewards) / earnings
+    val days2wait = (payout) / earnings
     Datas.days2payout = days2wait.toInt().toString()
     return Datas.days2payout
 }

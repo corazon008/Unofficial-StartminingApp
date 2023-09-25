@@ -30,7 +30,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Live rewards :" />
+            android:text="@string/balance" />
         <TextView
             android:id="@+id/live_rewards"
             style="@style/BitcoinStyle"
@@ -49,7 +49,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next payout :" />
+            android:text="@string/next_payout" />
         <TextView
             android:id="@+id/next_payout"
             style="@style/DateStyle"
@@ -68,7 +68,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Days to reached payout :" />
+            android:text="@string/days2reached" />
         <TextView
             android:id="@+id/reached_payout"
             style="@style/DateStyle"
@@ -88,7 +88,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estimated earnings (24h) : " />
+            android:text="@string/earnings" />
         <TextView
             android:id="@+id/earnings"
             style="@style/BitcoinStyle"
@@ -108,7 +108,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total payout :" />
+            android:text="@string/total_payout" />
         <TextView
             android:id="@+id/total_payout"
             style="@style/BitcoinStyle"

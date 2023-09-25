@@ -5,5 +5,10 @@
     <string name="title_options">Options</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an app widget description</string>
+    <string name="balance">Balance : </string>
+    <string name="total_payout"> Total payout : </string>
+    <string name="next_payout"> Next payout : </string>
+    <string name="days2reached">Days between each payout : </string>
+    <string name="earnings">Estimated earnings (24h) : </string>
+    <string name="app_widget_description">Widget to track your reward and your date of payout</string>
 </resources>

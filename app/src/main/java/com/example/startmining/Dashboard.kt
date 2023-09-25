@@ -34,10 +34,13 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val widgetText = context.getString(R.string.appwidget_text)
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.dashboard)
-    views.setTextViewText(R.id.appwidget_text, widgetText)
+    Datas.RefreshStake()
+    Datas.RefreshTextValue()
+    views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
+    views.setTextViewText(R.id.widget_next_payout, NextPayout())
+
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

@@ -8,8 +8,6 @@ import java.net.URL
 import java.time.LocalDate
 import kotlin.math.pow
 
-class Functions {
-}
 
 fun Url2Json(url:String): String {
 
@@ -34,7 +32,7 @@ fun RoundBTC(btc:Float): String {
 }
 
 
-fun LiveReward() {
+fun LiveReward(): Float {
     try {
         var json = Url2Json("https://cruxpool.com/api/btc/miner/${Datas.btc_wallet}/balance")
 
@@ -46,6 +44,7 @@ fun LiveReward() {
     catch (cause: Throwable) {
         Log.e("Custom","Error live_rewards: $cause")
     }
+    return Datas.live_rewards
 }
 
 fun TotalPayout() {

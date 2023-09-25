@@ -36,13 +36,12 @@
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:text="0" />
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="BTC" />
 
         <TextView
@@ -55,7 +54,6 @@
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:text="01/01" />
         <TextView
             style="@style/BitcoinStyle"
@@ -74,13 +72,12 @@
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:text="01" />
         <TextView
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="Days" />
 
         <TextView
@@ -94,13 +91,12 @@
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:text="0" />
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="BTC" />
 
         <TextView
@@ -114,13 +110,12 @@
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:text="0" />
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="BTC" />
 
     </GridLayout>

@@ -86,7 +86,6 @@ fun NextPayout(): String {
 
 fun Days2ReachedPayout(): String {
     val earnings = Datas.earnings
-    val rewards = Datas.live_rewards
     if (earnings == 0F){
         return "NaN"
     }

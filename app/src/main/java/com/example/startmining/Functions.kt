@@ -28,7 +28,7 @@ fun RoundBTC(btc:Float): String {
     if (btc == 0F){
         return "0"
     }
-    return "% .8f".format(btc)
+    return "% .7f".format(btc)
 }
 
 

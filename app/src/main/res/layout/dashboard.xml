@@ -1,4 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:appWidgetRadius="http://schemas.android.com/tools"
     style="@style/Widget.Startmining.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,26 +12,44 @@
         android:id="@+id/gridLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:columnCount="2"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:columnCount="3"
         android:rowCount="2">
 
         <TextView
-            android:id="@+id/textView4"
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/balance"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            android:text="@string/balance" />
+
         <TextView
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_payout"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            android:text="Earnings :" />
+
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/next_payout" />
 
         <TextView
             android:id="@+id/widget_live_rewards"
+            style="@style/BitcoinStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/widget_earnings"
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

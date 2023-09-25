@@ -296,6 +296,9 @@ class Datas {
 
         fun RefreshStake() {
             this.MainRefreashRunning = true
+            Thread { LiveReward() }.start()
+            Thread { TotalPayout() }.start()
+
             var my_stake_ThreadList: List<Thread> = listOf(
                 Thread { Origin.GetMyStake() },
                 Thread { Genesis.GetMyStake() },
@@ -316,9 +319,6 @@ class Datas {
             for (t in ThreadList){
                 t.start()
             }
-            Thread { LiveReward() }.start()
-            Thread { TotalPayout() }.start()
-
             for (t in ThreadList){
                 t.join()
             }

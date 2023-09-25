@@ -40,7 +40,7 @@ internal fun updateAppWidget(
     Datas.RefreshTextValue()
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
     views.setTextViewText(R.id.widget_next_payout, NextPayout())
-
+    views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

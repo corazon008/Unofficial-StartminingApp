@@ -1,5 +1,6 @@
 package com.example.startmining.ui.dashboard
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startmining.Datas
 import com.example.startmining.Days2ReachedPayout
 import com.example.startmining.NextPayout
+import com.example.startmining.R
 import com.example.startmining.RoundBTC
 import com.example.startmining.databinding.FragmentDashboardBinding
 
@@ -39,6 +41,13 @@ class DashboardFragment : Fragment() {
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        Datas.btc_wallet = sharedPref!!.getString(getString(R.string.btc_address), "").toString()
+        Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
+
+
 
         Thread {
             Datas.RefreshStake()

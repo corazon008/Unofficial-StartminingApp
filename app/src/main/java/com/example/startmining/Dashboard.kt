@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
 
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -15,6 +16,9 @@ class Dashboard : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         // There may be multiple widgets active, so update all of them
+        Datas.btc_wallet = context.getSharedPreferences(R.string.btc_address.toString(), 0).toString()
+        Datas.eth_wallet = context.getSharedPreferences(R.string.eth_address.toString(), 0).toString()
+
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }

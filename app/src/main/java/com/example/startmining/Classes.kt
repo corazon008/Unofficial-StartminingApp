@@ -4,9 +4,6 @@ import android.util.Log
 import org.json.JSONObject
 
 
-class Classes {
-}
-
 class Origin {
     companion object {
         val address = "bc1qdzcgvennnjzv4jry38s0krjtl3x9n374302c75"
@@ -21,11 +18,11 @@ class Origin {
             while (this.my_stake_running) { Thread.sleep(100) }
             if (this.my_stake > 0) {
                 try {
-                    var json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
+                    val json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
                     val response = JSONObject(json)
                     val data = response.getJSONObject("data")
                     val perMin = data.getDouble("coinPerMins")
-                    var perDay = perMin * 60 * 24
+                    val perDay = perMin * 60 * 24
                     this.pool_earnings = perDay
                 } catch (cause: Throwable) {
                     Log.e("Custom", "Error in Origin.GetPoolEarnings: $cause")
@@ -112,11 +109,11 @@ class Genesis {
             while (this.my_stake_running) { Thread.sleep(100) }
             if (this.my_stake > 0) {
                 try {
-                    var json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
+                    val json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
                     val response = JSONObject(json)
                     val data = response.getJSONObject("data")
                     val perMin = data.getDouble("coinPerMins")
-                    var perDay = perMin * 60 * 24
+                    val perDay = perMin * 60 * 24
                     this.pool_earnings = perDay
                 } catch (cause: Throwable) {
                     Log.e("Custom", "Error in Genesis.GetPoolEarnings: $cause")
@@ -202,11 +199,11 @@ class Northpool {
             while (this.my_stake_running) { Thread.sleep(100) }
             if (this.my_stake > 0) {
                 try {
-                    var json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
+                    val json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
                     val response = JSONObject(json)
                     val data = response.getJSONObject("data")
                     val perMin = data.getDouble("coinPerMins")
-                    var perDay = perMin * 60 * 24
+                    val perDay = perMin * 60 * 24
                     this.pool_earnings = perDay
                 } catch (cause: Throwable) {
                     Log.e("Custom", "Error in Genesis.GetPoolEarnings: $cause")
@@ -283,9 +280,8 @@ class Northpool {
 
 class Datas {
     companion object {
-        private const val file_name = "datas.pkl"
-        var btc_wallet = "bc1qzpf9qzzzr7swa98cm3ur46vma9y6cgr9wch90r"
-        var eth_wallet = "0x7372C3A677ac01F389A87B4Fc8614C0d241CC971"
+        var btc_wallet = ""
+        var eth_wallet = ""
 
         var live_rewards: Float = 0F
         var total_payout: Float = 0F
@@ -299,7 +295,7 @@ class Datas {
             Thread { LiveReward() }.start()
             Thread { TotalPayout() }.start()
 
-            var my_stake_ThreadList: List<Thread> = listOf(
+            val my_stake_ThreadList: List<Thread> = listOf(
                 Thread { Origin.GetMyStake() },
                 Thread { Genesis.GetMyStake() },
                 Thread { Northpool.GetMyStake() },
@@ -307,7 +303,7 @@ class Datas {
             for (t in my_stake_ThreadList){ t.start() }
             for (t in my_stake_ThreadList){ t.join() }
 
-            var ThreadList: List<Thread> = listOf(
+            val ThreadList: List<Thread> = listOf(
                 Thread { Origin.GetAllStake() },
                 Thread { Genesis.GetAllStake() },
                 Thread { Northpool.GetAllStake() },

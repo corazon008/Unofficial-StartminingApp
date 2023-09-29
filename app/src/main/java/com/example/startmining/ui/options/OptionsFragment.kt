@@ -38,7 +38,7 @@ class OptionsFragment : Fragment() {
         button.setOnClickListener {
             val btc_address = binding.BTCinput.text
             val eth_address = binding.ETHinput.text
-            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            val sharedPref = activity?.getSharedPreferences(R.string.file_name.toString(), Context.MODE_PRIVATE)
             if (sharedPref != null) {
                 with (sharedPref.edit()) {
                     putString(getString(R.string.btc_address), btc_address.toString())

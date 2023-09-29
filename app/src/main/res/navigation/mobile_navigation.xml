@@ -6,16 +6,22 @@
     app:startDestination="@+id/navigation_dashboard">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.startmining.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.startmining.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_pools"
+        android:name="com.example.startmining.ui.pools.PoolsFragment"
+        android:label="@string/title_pools"
+        tools:layout="@layout/fragment_pools" />
+
+    <fragment
+        android:id="@+id/navigation_simulator"
+        android:name="com.example.startmining.ui.simulator.SimulatorFragment"
+        android:label="@string/title_pools"
+        tools:layout="@layout/fragment_simulator" />
 
     <fragment
         android:id="@+id/navigation_options"

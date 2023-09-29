@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
+import java.util.Calendar
 
 
 /**
@@ -33,10 +34,6 @@ class Dashboard : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         // Enter relevant functionality for when the last widget is disabled
     }
-
-    companion object {
-        var i = 1
-    }
 }
 
 internal fun updateAppWidget(
@@ -46,13 +43,18 @@ internal fun updateAppWidget(
 ) {
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.dashboard)
+
+    val calendar = Calendar.getInstance()
+    val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
+    val minutes = calendar[Calendar.MINUTE]
+
+
     Datas.RefreshStake()
     Datas.RefreshTextValue()
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
     views.setTextViewText(R.id.widget_next_payout, NextPayout())
     views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
-    views.setTextViewText(R.id.textView5, Dashboard.i.toString())
-    Dashboard.i++
+    views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

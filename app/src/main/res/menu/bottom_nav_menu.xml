@@ -2,14 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/dashboard"
+        android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_pools"
+        android:icon="@drawable/pools"
+        android:title="@string/title_pools" />
+
+    <item
+        android:id="@+id/navigation_simulator"
+        android:icon="@drawable/simulator"
+        android:title="@string/title_simulator" />
 
     <item
         android:id="@+id/navigation_options"

@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Startmining Unofficial</string>
-    <string name="title_home">Home</string>
+    <string name="title_simulator">Simulator</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_options">Options</string>
+    <string name="title_pools">Pools</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="balance">Balance : </string>

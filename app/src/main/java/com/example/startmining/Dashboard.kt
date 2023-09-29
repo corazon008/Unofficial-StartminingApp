@@ -16,10 +16,10 @@ class Dashboard : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         // There may be multiple widgets active, so update all of them
-        val pref = context.getSharedPreferences(R.string.file_name.toString(), Context.MODE_PRIVATE)
+        val sharedPref = context.getSharedPreferences(context.getString(R.string.file_name), Context.MODE_PRIVATE)
 
-        Datas.btc_wallet = pref.getString(R.string.btc_address.toString(), "").toString()
-        Datas.eth_wallet = pref.getString(R.string.eth_address.toString(), "").toString()
+        Datas.btc_wallet = sharedPref.getString(context.getString(R.string.btc_address), "").toString()
+        Datas.eth_wallet = sharedPref.getString(context.getString(R.string.eth_address), "").toString()
 
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -52,8 +52,8 @@ internal fun updateAppWidget(
     views.setTextViewText(R.id.widget_next_payout, NextPayout())
     views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
     views.setTextViewText(R.id.textView5, Dashboard.i.toString())
+    Dashboard.i++
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
-    Dashboard.i++
 }

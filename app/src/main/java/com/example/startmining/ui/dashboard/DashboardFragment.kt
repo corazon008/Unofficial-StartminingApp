@@ -42,7 +42,7 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val sharedPref = activity?.getSharedPreferences(R.string.file_name.toString(), Context.MODE_PRIVATE)
+        val sharedPref = activity?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
 
         Datas.btc_wallet = sharedPref!!.getString(getString(R.string.btc_address), "").toString()
         Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()

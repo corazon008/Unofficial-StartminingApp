@@ -6,6 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".ui.pools.PoolsFragment">
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        tools:context=".MainActivity"
+        android:background="@drawable/1">
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Origin"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Occupancy"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="328/435"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hashrate Live"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.40 PH/s"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min duration"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1241 days"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BTC/24h/Token"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00002878 BTC"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your stake"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/PoolStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"/>
+
+    </GridLayout>
+
+
+
     <TextView
         android:id="@+id/text_pools"
         android:layout_width="match_parent"
@@ -19,4 +110,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

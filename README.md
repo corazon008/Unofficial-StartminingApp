@@ -11,8 +11,9 @@ You can test it on a virtual device or your own.
 ## Views
 
 ### Dashboard
-![Dashboard](./images/Dashboard.jpg)
+<img src="./images/Dashboard.jpg" alt="Dashboard" height="600">
+
 
 
 ### Options
-![Options](./images/Options.jpg)
+<img src="./images/Options.jpg" alt="Options" height="600">

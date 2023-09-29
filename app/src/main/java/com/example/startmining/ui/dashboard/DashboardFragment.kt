@@ -48,7 +48,6 @@ class DashboardFragment : Fragment() {
         Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
 
 
-
         Thread {
             Datas.RefreshStake()
         }.start()

@@ -3,7 +3,6 @@ package com.example.startmining
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.util.Log
 import android.widget.RemoteViews
 
 
@@ -21,11 +20,6 @@ class Dashboard : AppWidgetProvider() {
 
         Datas.btc_wallet = pref.getString(R.string.btc_address.toString(), "").toString()
         Datas.eth_wallet = pref.getString(R.string.eth_address.toString(), "").toString()
-
-        Log.e("widget", "Datas.btc_wallet=${Datas.btc_wallet}")
-        Log.e("widget", "Datas.eth_wallet=${Datas.eth_wallet}")
-
-
 
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)

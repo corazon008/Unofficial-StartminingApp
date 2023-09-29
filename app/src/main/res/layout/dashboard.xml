@@ -1,18 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.Startmining.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Startmining.AppWidgetContainer"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:id="@+id/layout">
 
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="30dp"
         android:columnCount="3"
         android:rowCount="2">
 
@@ -63,6 +64,23 @@
             android:text="01/01" />
 
     </GridLayout>
+
+
+    <ImageView
+        android:id="@+id/refresh"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/gridLayout"
+        android:layout_marginEnd="-30dp"
+        app:srcCompat="@mipmap/refresh" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridLayout"
+        android:textColor="@color/white"
+        android:text="TextView" />
 
 
 </RelativeLayout>

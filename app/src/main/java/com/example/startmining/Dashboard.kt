@@ -3,6 +3,7 @@ package com.example.startmining
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.util.Log
 import android.widget.RemoteViews
 
 
@@ -16,8 +17,15 @@ class Dashboard : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         // There may be multiple widgets active, so update all of them
-        Datas.btc_wallet = context.getSharedPreferences(R.string.btc_address.toString(), 0).toString()
-        Datas.eth_wallet = context.getSharedPreferences(R.string.eth_address.toString(), 0).toString()
+        val pref = context.getSharedPreferences(R.string.file_name.toString(), Context.MODE_PRIVATE)
+
+        Datas.btc_wallet = pref.getString(R.string.btc_address.toString(), "").toString()
+        Datas.eth_wallet = pref.getString(R.string.eth_address.toString(), "").toString()
+
+        Log.e("widget", "Datas.btc_wallet=${Datas.btc_wallet}")
+        Log.e("widget", "Datas.eth_wallet=${Datas.eth_wallet}")
+
+
 
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -30,6 +38,10 @@ class Dashboard : AppWidgetProvider() {
 
     override fun onDisabled(context: Context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    companion object {
+        var i = 1
     }
 }
 
@@ -45,7 +57,9 @@ internal fun updateAppWidget(
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
     views.setTextViewText(R.id.widget_next_payout, NextPayout())
     views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
+    views.setTextViewText(R.id.textView5, Dashboard.i.toString())
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
+    Dashboard.i++
 }

@@ -1,11 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
     style="@style/Widget.Startmining.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Startmining.AppWidgetContainer"
     android:background="@drawable/bg"
-    android:id="@+id/layout">
+    android:theme="@style/Theme.Startmining.AppWidgetContainer">
 
 
     <GridLayout
@@ -65,13 +64,27 @@
 
     </GridLayout>
 
-    <TextView
-        android:id="@+id/textView5"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/gridLayout"
-        android:textColor="@color/white"
-        android:text="TextView" />
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last sync : "
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

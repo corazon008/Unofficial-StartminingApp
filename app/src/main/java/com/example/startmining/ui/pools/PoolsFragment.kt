@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.example.startmining.databinding.FragmentPoolsBinding
+
 
 class PoolsFragment : Fragment() {
 
     private var _binding: FragmentPoolsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,21 +21,37 @@ class PoolsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val poolsViewModel =
-            ViewModelProvider(this).get(PoolsViewModel::class.java)
-
         _binding = FragmentPoolsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textPools
-        poolsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        // Configurer le ViewPager
+        val viewPager: ViewPager = binding.viewPager
+        val adapter = PoolsPagerAdapter(childFragmentManager)
+        viewPager.adapter = adapter
+
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+
+class PoolsPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+
+    override fun getItem(position: Int): Fragment {
+        return when (position) {
+            0 -> OriginFragment()
+            1 -> GenesisFragment()
+            2 -> NorthpoolFragment()
+            else -> throw IllegalArgumentException("Invalid position: $position")
+        }
+    }
+
+    override fun getCount(): Int {
+        return 3 // Nombre total de fragments
     }
 }

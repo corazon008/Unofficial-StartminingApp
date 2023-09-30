@@ -1,115 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.pools.PoolsFragment">
+    android:layout_height="match_parent">
 
-    <GridLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        tools:context=".MainActivity"
-        android:background="@drawable/1">
+        android:layout_height="match_parent"
+        android:paddingLeft="50dp"
+        android:paddingTop="140dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="140dp" />
 
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Origin"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Occupancy"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="328/435"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hashrate Live"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.40 PH/s"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Min duration"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1241 days"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BTC/24h/Token"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.00002878 BTC"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your stake"
-            android:textStyle="bold"/>
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"/>
-
-    </GridLayout>
-
-
-
-    <TextView
-        android:id="@+id/text_pools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

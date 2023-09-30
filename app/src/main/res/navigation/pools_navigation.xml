@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pools_navigation"
+    app:startDestination="@id/pool1">
+
+    <fragment
+        android:id="@+id/pool1"
+        android:name="com.example.startmining.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_origin" />
+
+    <fragment
+        android:id="@+id/pool2"
+        android:name="com.example.startmining.ui.pools.PoolsFragment"
+        android:label="@string/title_pools"
+        tools:layout="@layout/fragment_genesis" />
+
+    <fragment
+        android:id="@+id/pool3"
+        android:name="com.example.startmining.ui.simulator.SimulatorFragment"
+        android:label="@string/title_pools"
+        tools:layout="@layout/fragment_northpool" />
+
+</navigation>

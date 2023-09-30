@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/navigation_simulator"
         android:name="com.example.startmining.ui.simulator.SimulatorFragment"
-        android:label="@string/title_pools"
+        android:label="@string/title_simulator"
         tools:layout="@layout/fragment_simulator" />
 
     <fragment

@@ -49,7 +49,8 @@ internal fun updateAppWidget(
     val minutes = calendar[Calendar.MINUTE]
 
 
-    Datas.RefreshStake()
+    Datas.refresh_thread.start()
+    Datas.refresh_thread.join()
     Datas.RefreshTextValue()
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
     views.setTextViewText(R.id.widget_next_payout, NextPayout())

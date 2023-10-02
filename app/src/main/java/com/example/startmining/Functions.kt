@@ -31,10 +31,13 @@ fun RoundBTC(btc:Float): String {
     return "% .7f".format(btc)
 }
 
+fun RoundHashrate(hashrate:Double): String {
+    return "% .2f".format(hashrate / 10.0.pow(15))
+}
 
 fun LiveReward(): Float {
     try {
-        var json = Url2Json("https://cruxpool.com/api/btc/miner/${Datas.btc_wallet}/balance")
+        val json = Url2Json("https://cruxpool.com/api/btc/miner/${Datas.btc_wallet}/balance")
 
         val response = JSONObject(json)
         val data = response.getJSONObject("data")
@@ -49,7 +52,7 @@ fun LiveReward(): Float {
 
 fun TotalPayout() {
     try {
-        var json = Url2Json("https://cruxpool.com/api/btc/miner/${Datas.btc_wallet}/payments")
+        val json = Url2Json("https://cruxpool.com/api/btc/miner/${Datas.btc_wallet}/payments")
 
         val response = JSONObject(json)
         val data = response.getJSONObject("data")

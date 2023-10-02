@@ -14,10 +14,9 @@ class Datas {
         var earnings: Float = 0F // coin per day
         var next_payout = ""
         var days2payout = ""
-        var MainRefreashRunning = false
+        var refresh_thread = Thread { this.RefreshStake() }
 
         fun RefreshStake() {
-            this.MainRefreashRunning = true
             Thread { LiveReward() }.start()
             Thread { TotalPayout() }.start()
 
@@ -28,13 +27,10 @@ class Datas {
             )
             for (t in ThreadList){ t.start() }
             for (t in ThreadList){ t.join() }
-            this.MainRefreashRunning = false
         }
 
         fun RefreshTextValue() {
-            while (this.MainRefreashRunning) {
-                Thread.sleep(100)
-            }
+            this.refresh_thread.join()
             this.earnings = (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings())
         }
     }

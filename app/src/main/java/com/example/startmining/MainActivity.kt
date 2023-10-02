@@ -1,5 +1,6 @@
 package com.example.startmining
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -15,6 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //make all the requests during the launch
+        val sharedPref = application?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
+
+        Datas.btc_wallet = sharedPref!!.getString(getString(R.string.btc_address), "").toString()
+        Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
+
+        Datas.refresh_thread.start()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

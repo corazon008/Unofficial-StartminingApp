@@ -2,6 +2,7 @@ package com.example.startmining.ui.dashboard
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,56 +14,57 @@ import com.example.startmining.NextPayout
 import com.example.startmining.RoundBTC
 import com.example.startmining.databinding.FragmentDashboardBinding
 
-
 class DashboardFragment : Fragment() {
-    private var mHandler: Handler? = null
-    private var liveRewards: TextView? = null
-    private var totalPayout: TextView? = null
-    private var earnings: TextView? = null
-    private var nextPayout: TextView? = null
-    private var reachedPayout: TextView? = null
+    private lateinit var binding: FragmentDashboardBinding
+    private lateinit var liveRewards: TextView
+    private lateinit var totalPayout: TextView
+    private lateinit var earnings: TextView
+    private lateinit var nextPayout: TextView
+    private lateinit var reachedPayout: TextView
 
-    private var _binding: FragmentDashboardBinding? = null
+    private val mHandler: Handler by lazy {
+        Handler(Looper.getMainLooper())
+    }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val mUpdate: Runnable = object : Runnable {
+        override fun run() {
+            Datas.refresh_thread.join()
+            Datas.RefreshTextValue()
+            liveRewards.text = RoundBTC(Datas.live_rewards)
+            totalPayout.text = RoundBTC(Datas.total_payout)
+            earnings.text = RoundBTC(Datas.earnings)
+            nextPayout.text = NextPayout()
+            reachedPayout.text = Days2ReachedPayout()
+
+            // Planifiez la prochaine exécution de la mise à jour
+            //mHandler.postDelayed(this, 100)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        Datas.refresh_thread.join()
+        // Initialisation des TextViews
         liveRewards = binding.liveRewards
         totalPayout = binding.totalPayout
         earnings = binding.earnings
         nextPayout = binding.nextPayout
         reachedPayout = binding.reachedPayout
 
-        mHandler = Handler()
-        mHandler!!.post(mUpdate)
+        // Démarrer la mise à jour périodique
+        mHandler.post(mUpdate)
 
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
-    }
-    private val mUpdate: Runnable = object : Runnable {
-        override fun run() {
-            Datas.refresh_thread.join()
-            Datas.RefreshTextValue()
-            liveRewards!!.text = RoundBTC(Datas.live_rewards)
-            totalPayout!!.text = RoundBTC(Datas.total_payout)
-            earnings!!.text = RoundBTC(Datas.earnings)
-            nextPayout!!.text = NextPayout()
-            reachedPayout!!.text = Days2ReachedPayout()
-        }
+        // Arrêter la mise à jour lorsque le fragment est détruit
+        mHandler.removeCallbacks(mUpdate)
     }
 }
-

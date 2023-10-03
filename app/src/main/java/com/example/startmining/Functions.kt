@@ -10,10 +10,9 @@ import kotlin.math.pow
 
 
 fun Url2Json(url:String): String {
-
-    val url = URL(url)
-    val connection = url.openConnection()
+    val connection = URL(url).openConnection()
     val response = StringBuilder()
+
     BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
 
         var line: String?
@@ -21,14 +20,20 @@ fun Url2Json(url:String): String {
             response.append(line)
         }
     }
-    return response.toString()
+
+    var text_response: String = response.toString()
+    if("limit reached" in response.toString()){
+        Thread.sleep(100)
+        text_response = Url2Json(url)
+    }
+    return text_response
 }
 
-fun RoundBTC(btc:Float): String {
+fun RoundBTC(btc:Float, n: Int = 8): String {
     if (btc == 0F){
         return "0"
     }
-    return "% .7f".format(btc)
+    return "% .${n}f".format(btc)
 }
 
 fun RoundHashrate(hashrate:Double): String {
@@ -97,4 +102,73 @@ fun Days2ReachedPayout(): String {
     val days2wait = (payout) / earnings
     Datas.days2payout = days2wait.toInt().toString()
     return Datas.days2payout
+}
+
+fun AllStakeFun(pool_id: Int): Int {
+    var nb = 1
+    try {
+        val url = Datas.base_url + "&data=0x03501951000000000000000000000000000000000000000000000000000000000000000${pool_id}"
+        val json: String = Url2Json(url)
+        val response = JSONObject(json)
+        var data = response.getString("result")
+        data = data.substring(2) // Remove the first two characters
+
+        val start = mutableListOf<String>()
+        var index = 0
+        while (index < data.length) {
+            start.add(data.substring(index, minOf(index + 64, data.length)))
+            index += 64
+        }
+        val startNum = start.map { it.toLong(16) }
+        nb = startNum.size
+
+    } catch (cause: Throwable) {
+        Log.e("Custom", "Error AllStakeFun: $cause")
+    }
+    return nb - 2
+}
+
+fun MyStakeFun(pool_id: Int): Int {
+    var nb = 1
+    try {
+        val url = Datas.base_url + "&data=0xbfafa378000000000000000000000000000000000000000000000000000000000000000${pool_id}000000000000000000000000${Datas.eth_wallet.substring(2)}"
+        val json: String = Url2Json(url)
+        val response = JSONObject(json)
+        var data = response.getString("result")
+        data = data.substring(2) // Remove the first two characters
+
+        val start = mutableListOf<String>()
+        var index = 0
+        while (index < data.length) {
+            start.add(data.substring(index, minOf(index + 64, data.length)))
+            index += 64
+        }
+        val startNum = start.map { it.toLong(16) }
+        nb = startNum.size
+
+    } catch (cause: Throwable) {
+        Log.e("Custom", "Error MyStakeFun: $cause")
+    }
+    return nb - 2
+}
+
+fun PoolEarningsFun(address:String): MutableMap<String, Double> {
+    val value = mutableMapOf(
+        "pool_earnings" to 0.0,
+        "hashrate" to 0.0
+    )
+    try {
+        val json = Url2Json("https://cruxpool.com/api/btc/miner/${address}")
+        val response = JSONObject(json)
+        val data = response.getJSONObject("data")
+        val perMin = data.getDouble("coinPerMins")
+        val perDay = perMin * 60 * 24
+        value["pool_earnings"] = perDay
+        value["hashrate"] = data.getDouble("avgHashrate")
+    } catch (cause: Throwable) {
+        Log.e("Custom", "Error in PoolEarningsFun: $cause")
+    }
+
+    return value
+
 }

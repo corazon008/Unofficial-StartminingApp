@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.startmining.Datas
+import com.example.startmining.AllStakeFun
+import com.example.startmining.MyStakeFun
+import com.example.startmining.PoolEarningsFun
 import com.example.startmining.RoundBTC
 import com.example.startmining.RoundHashrate
-import com.example.startmining.Url2Json
 import com.example.startmining.databinding.FragmentNorthpoolBinding
-import org.json.JSONObject
 
 class NorthpoolFragment : Fragment() {
     private var _binding: FragmentNorthpoolBinding? = null
@@ -26,7 +26,7 @@ class NorthpoolFragment : Fragment() {
         Northpool.WaitUntilReady()
         binding.occupancy.text = Northpool.all_stake.toString()
         binding.hashrate.text = RoundHashrate(Northpool.hashrate)
-        binding.btcEarnings.text = RoundBTC(Northpool.pool_earnings.toFloat())
+        binding.btcEarnings.text = RoundBTC(Northpool.pool_earnings.toFloat(), 6)
         binding.myStake.text = Northpool.my_stake.toString()
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)
@@ -74,18 +74,9 @@ class Northpool {
 
         fun GetPoolEarnings() {
             this.my_stake_thread.join()
-            try {
-                val json = Url2Json("https://cruxpool.com/api/btc/miner/${this.address}")
-                val response = JSONObject(json)
-                val data = response.getJSONObject("data")
-                val perMin = data.getDouble("coinPerMins")
-                val perDay = perMin * 60 * 24
-                this.pool_earnings = perDay
-                this.hashrate = data.getDouble("avgHashrate")
-            } catch (cause: Throwable) {
-                Log.e("Custom", "Error in Origin.GetPoolEarnings: $cause")
-            }
-
+            val value = PoolEarningsFun(this.address)
+            this.pool_earnings = value["pool_earnings"]!!
+            this.hashrate = value["hashrate"]!!
         }
 
         fun GetMyEarnings(): Float {
@@ -99,51 +90,13 @@ class Northpool {
 
         fun GetAllStake() {
             this.my_stake_thread.join()
-            try {
-                val url =
-                    "https://api.etherscan.io/api?module=proxy&action=eth_call&to=0xb4a3c079acbd57668bf5292c13878f9225678381&data=0x03501951000000000000000000000000000000000000000000000000000000000000000${this.pool_id}&tag=latest&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
-                val json: String = Url2Json(url)
-                val response = JSONObject(json)
-                var data = response.getString("result")
-                data = data.substring(2) // Remove the first two characters
-
-                val start = mutableListOf<String>()
-                var index = 0
-                while (index < data.length) {
-                    start.add(data.substring(index, minOf(index + 64, data.length)))
-                    index += 64
-                }
-                val startNum = start.map { it.toLong(16) }
-                val nb = startNum.size
-                this.all_stake = nb - 2
-            } catch (cause: Throwable) {
-                Log.e("Custom", "Error Origin.GetAllStake: $cause")
-            }
+            this.all_stake = AllStakeFun(this.pool_id)
 
         }
 
         fun GetMyStake() {
-            try {
-                val url =
-                    "https://api.etherscan.io/api?module=proxy&action=eth_call&to=0xb4a3c079acbd57668bf5292c13878f9225678381&data=0xbfafa378000000000000000000000000000000000000000000000000000000000000000${this.pool_id}000000000000000000000000${
-                        Datas.eth_wallet.substring(2)
-                    }&tag=latest&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
-                val json: String = Url2Json(url)
-                val response = JSONObject(json)
-                var data = response.getString("result")
-                data = data.substring(2) // Remove the first two characters
-                val start = mutableListOf<String>()
-                var index = 0
-                while (index < data.length) {
-                    start.add(data.substring(index, minOf(index + 64, data.length)))
-                    index += 64
-                }
-                val startNum = start.map { it.toLong(16) }
-                val nb = startNum.size
-                this.my_stake = nb - 2
-            } catch (cause: Throwable) {
-                Log.e("Custom", "Error Origin.GetMyStake: $cause")
-            }
+            this.my_stake = MyStakeFun(this.pool_id)
         }
+
     }
 }

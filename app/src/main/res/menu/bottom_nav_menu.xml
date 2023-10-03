@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/dashboard"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_dashboard"
+        />
 
     <item
         android:id="@+id/navigation_pools"
@@ -14,7 +14,8 @@
     <item
         android:id="@+id/navigation_simulator"
         android:icon="@drawable/simulator"
-        android:title="@string/title_simulator" />
+        android:title="@string/title_simulator"
+        android:enabled="false"/>
 
     <item
         android:id="@+id/navigation_options"

@@ -8,6 +8,7 @@ class Datas {
     companion object {
         var btc_wallet = ""
         var eth_wallet = ""
+        val base_url:String = "https://api.etherscan.io/api?module=proxy&action=eth_call&to=0xb4a3c079acbd57668bf5292c13878f9225678381&tag=latest&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
 
         var live_rewards: Float = 0F
         var total_payout: Float = 0F

@@ -53,7 +53,7 @@ internal fun updateAppWidget(
     Datas.refresh_thread.join()
     Datas.RefreshTextValue()
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
-    views.setTextViewText(R.id.widget_next_payout, NextPayout())
+    views.setTextViewText(R.id.widget_next_payout, DateNextPayout())
     views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
     views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")
 

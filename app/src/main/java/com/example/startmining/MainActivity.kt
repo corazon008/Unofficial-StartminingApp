@@ -18,12 +18,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //make all the requests during the launch
-        val sharedPref = application?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
+        val sharedPref =
+            application?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
 
         Datas.btc_wallet = sharedPref!!.getString(getString(R.string.btc_address), "").toString()
         Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
 
         Datas.refresh_thread.start()
+        Thread { GetDateOfMint() }.start()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,10 +37,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_dashboard, R.id.navigation_pools, R.id.navigation_simulator, R.id.navigation_options
+                R.id.navigation_dashboard,
+                R.id.navigation_pools,
+                R.id.navigation_simulator,
+                R.id.navigation_options
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }
+

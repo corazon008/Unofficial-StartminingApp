@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    tools:context=".ui.dashboard.DashboardFragment">
 
 
     <GridLayout
@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0" />
+
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
@@ -37,35 +38,55 @@
             android:layout_gravity="start"
             android:text="BTC" />
 
+        <LinearLayout android:layout_columnSpan="3">
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ratio :"/>
+
+            <ProgressBar
+                android:id="@+id/Ratio"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="250dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/progress_bar_background"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+
         <TextView
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next_payout" />
+
         <TextView
             android:id="@+id/next_payout"
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01/01" />
-        <TextView
-            style="@style/BitcoinStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
             android:layout_gravity="start"
-            android:text="" />
+            android:text="01/01" />
 
         <TextView
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/days2reached" />
+
         <TextView
             android:id="@+id/reached_payout"
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="01" />
+
         <TextView
             style="@style/DateStyle"
             android:layout_width="wrap_content"
@@ -79,12 +100,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/earnings" />
+
         <TextView
             android:id="@+id/earnings"
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0" />
+
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
@@ -98,12 +121,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/total_payout" />
+
         <TextView
             android:id="@+id/total_payout"
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0" />
+
         <TextView
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
@@ -111,8 +136,9 @@
             android:layout_gravity="start"
             android:text="BTC" />
 
+
+
+
     </GridLayout>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

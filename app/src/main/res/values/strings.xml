@@ -9,7 +9,7 @@
     <string name="balance">Balance : </string>
     <string name="total_payout"> Total payout : </string>
     <string name="next_payout"> Next payout : </string>
-    <string name="days2reached">Days between each payout : </string>
+    <string name="days2reached">Days between payout : </string>
     <string name="earnings">Estimated earnings (24h) : </string>
     <string name="app_widget_description">Widget to track your reward and your date of payout</string>
     <string name="btc_address">btc_address</string>

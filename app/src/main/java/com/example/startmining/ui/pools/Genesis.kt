@@ -27,7 +27,7 @@ class GenesisFragment : Fragment() {
         Genesis.WaitUntilReady()
         binding.occupancy.text = Genesis.all_stake.toString()
         binding.hashrate.text = RoundHashrate(Genesis.hashrate)
-        binding.btcEarnings.text = RoundBTC(Genesis.pool_earnings.toFloat(), 6)
+        binding.btcEarnings.text = RoundBTC((Genesis.pool_earnings / Genesis.all_stake).toFloat(), 6)
         binding.myStake.text = Genesis.my_stake.toString()
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)

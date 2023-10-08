@@ -25,7 +25,7 @@ class OriginFragment : Fragment() {
         Origin.WaitUntilReady()
         binding.occupancy.text = Origin.all_stake.toString()
         binding.hashrate.text = RoundHashrate(Origin.hashrate)
-        binding.btcEarnings.text = RoundBTC(Origin.pool_earnings.toFloat(), 6)
+        binding.btcEarnings.text = RoundBTC((Origin.pool_earnings / Origin.all_stake).toFloat(), 6)
         binding.myStake.text = Origin.my_stake.toString()
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)

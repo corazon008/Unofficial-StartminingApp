@@ -26,7 +26,7 @@ class NorthpoolFragment : Fragment() {
         Northpool.WaitUntilReady()
         binding.occupancy.text = Northpool.all_stake.toString()
         binding.hashrate.text = RoundHashrate(Northpool.hashrate)
-        binding.btcEarnings.text = RoundBTC(Northpool.pool_earnings.toFloat(), 6)
+        binding.btcEarnings.text = RoundBTC((Northpool.pool_earnings / Northpool.all_stake).toFloat(), 6)
         binding.myStake.text = Northpool.my_stake.toString()
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)

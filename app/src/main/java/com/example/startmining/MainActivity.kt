@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
 
         Datas.refresh_thread.start()
-        Thread { GetDateOfMint() }.start()
+        Datas.get_btc_would_have_thread.start()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

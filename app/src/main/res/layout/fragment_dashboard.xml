@@ -13,8 +13,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:columnCount="3"
-        android:rowCount="3"
+        android:columnCount="2"
+        android:paddingBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,38 +24,40 @@
             android:layout_height="wrap_content"
             android:text="@string/balance" />
 
-        <TextView
-            android:id="@+id/live_rewards"
-            style="@style/BitcoinStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0" />
+        <LinearLayout>
 
-        <TextView
-            style="@style/BitcoinStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="BTC" />
+            <TextView
+                android:id="@+id/live_rewards"
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
 
-        <LinearLayout android:layout_columnSpan="3">
+            <TextView
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BTC" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_columnSpan="2">
+
             <TextView
                 style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ratio :"/>
+                android:text="Rewards :" />
 
             <ProgressBar
                 android:id="@+id/Ratio"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="250dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:progress="0"
-                android:progressDrawable="@drawable/progress_bar_background"
-                android:layout_gravity="center"
-                />
+                android:progressDrawable="@drawable/progress_bar_background" />
         </LinearLayout>
 
 
@@ -70,7 +72,6 @@
             style="@style/DateStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
             android:layout_gravity="start"
             android:text="01/01" />
 
@@ -80,19 +81,21 @@
             android:layout_height="wrap_content"
             android:text="@string/days2reached" />
 
-        <TextView
-            android:id="@+id/reached_payout"
-            style="@style/DateStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="01" />
+        <LinearLayout>
 
-        <TextView
-            style="@style/DateStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="Days" />
+            <TextView
+                android:id="@+id/reached_payout"
+                style="@style/DateStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01" />
+
+            <TextView
+                style="@style/DateStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Days" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView3"
@@ -101,19 +104,21 @@
             android:layout_height="wrap_content"
             android:text="@string/earnings" />
 
-        <TextView
-            android:id="@+id/earnings"
-            style="@style/BitcoinStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0" />
+        <LinearLayout>
 
-        <TextView
-            style="@style/BitcoinStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="BTC" />
+            <TextView
+                android:id="@+id/earnings"
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BTC" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView4"
@@ -122,8 +127,44 @@
             android:layout_height="wrap_content"
             android:text="@string/total_payout" />
 
+        <LinearLayout>
+
+            <TextView
+                android:id="@+id/total_payout"
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                style="@style/BitcoinStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BTC" />
+        </LinearLayout>
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Btc you should have if you bought it instead of start :"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
         <TextView
-            android:id="@+id/total_payout"
+            android:id="@+id/btc_should_have"
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,12 +174,34 @@
             style="@style/BitcoinStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:gravity="center"
             android:text="BTC" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Progress :" />
 
+        <ProgressBar
+            android:id="@+id/btc_should_have_progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="250dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar_background" />
+    </LinearLayout>
 
-    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

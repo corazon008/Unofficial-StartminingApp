@@ -11,20 +11,30 @@
         <item name="android:layout_margin">8dp</item>
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@color/orange</item>
-        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="DateStyle">
         <item name="android:layout_margin">8dp</item>
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@color/blue</item>
-        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="PoolStyle">
         <item name="android:layout_margin">8dp</item>
         <item name="android:paddingVertical">10dp</item>
         <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
+    <style name="DataPoolStyle">
+        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:layout_marginHorizontal">0dp</item>
+        <item name="android:paddingVertical">10dp</item>
+        <item name="android:paddingHorizontal">4dp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/inter_regular</item>

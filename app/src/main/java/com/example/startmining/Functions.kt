@@ -9,26 +9,29 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
 import java.util.TimeZone
+import java.util.concurrent.Semaphore
 import kotlin.math.pow
 
+val MAX_CONCURRENT_REQUESTS = 5
+val semaphore = Semaphore(MAX_CONCURRENT_REQUESTS)
 
-fun Url2Json(url:String): String {
-    val connection = URL(url).openConnection()
-    val response = StringBuilder()
+fun Url2Json(url: String): String {
+    semaphore.acquire() // Acquire a permit, blocking if necessary until a permit is available
+    return try {
+        val connection = URL(url).openConnection()
+        val response = StringBuilder()
 
-    BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
-        var line: String?
-        while (inp.readLine().also { line = it } != null) {
-            response.append(line)
+        BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
+            var line: String?
+            while (inp.readLine().also { line = it } != null) {
+                response.append(line)
+            }
         }
-    }
 
-    var text_response: String = response.toString()
-    if("limit reached" in response.toString()){
-        Thread.sleep(100)
-        text_response = Url2Json(url)
+        response.toString()
+    } finally {
+        semaphore.release() // Release the permit
     }
-    return text_response
 }
 
 fun RoundBTC(btc:Float, n: Int = 8): String {
@@ -174,7 +177,9 @@ fun PoolEarningsFun(address:String): MutableMap<String, Double> {
     return value
 }
 
-fun GetDateOfMint() {
+fun GetBtcWouldHave() {
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+    dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     val method = listOf<String>("0xad4bae6f", "0x3776d26d")
     val url =
         "https://api.etherscan.io/api?module=account&action=txlist&address=${"0x7372C3A677ac01F389A87B4Fc8614C0d241CC971"}&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
@@ -186,19 +191,13 @@ fun GetDateOfMint() {
         val element = data.getJSONObject(i) // Obtenir l'objet JSON à l'indice i dans le tableau JSON
         if (element.getString("methodId") in method) {
             val timeStamp = element.getString("timeStamp")
-            val input = element.getString("input").substring(method[0].length, method[0].length + 64).toInt()
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val nb_start = element.getString("input").substring(method[0].length, method[0].length + 64).toInt()
             val date =dateFormat.format(Date(timeStamp.toLong() * 1000))
-            Log.e("Test", "${date}  ${input}")
-            Datas.mint_info.add(listOf(
-                mapOf("nb_start" to input),
-                mapOf("date" to date),
-                mapOf("btc_price" to GetBtcValue(date)),
-            ))
+            val nb_btc = 1000 / GetBtcValue(date).toFloat()
+            Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
+            Datas.btc_would_have += nb_btc * nb_start
         }
     }
-    Log.e("mint_info", Datas.mint_info.toString())
 }
 
 fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {

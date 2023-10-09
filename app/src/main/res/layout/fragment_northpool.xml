@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         style="@style/BackGroundImageView"
-        app:srcCompat="@drawable/northpool"/>
-
+        app:srcCompat="@drawable/northpool"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="NorthPool Image" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -26,14 +27,9 @@
             style="@style/PoolStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Origin"
-            android:textStyle="bold" />
-
-        <TextView
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
+            android:text="North Pool"
+            android:textStyle="bold"
+            android:layout_columnSpan="2"/>
 
         <TextView
             style="@style/PoolStyle"
@@ -42,26 +38,22 @@
             android:text="Occupancy"
             android:textStyle="bold" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout>
 
             <TextView
                 android:id="@+id/occupancy"
-                style="@style/PoolStyle"
+                style="@style/DataPoolStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                app:layout_constraintEnd_toStartOf="@+id/textView10"
-                />
+                android:text="0" />
 
             <TextView
-                android:id="@+id/textView10"
-                style="@style/PoolStyle"
+                style="@style/DataPoolStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/435"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_gravity="start|center"
+                android:text="/435" />
+        </LinearLayout>
 
 
         <TextView
@@ -71,20 +63,17 @@
             android:text="Hashrate Live"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <LinearLayout>
 
             <TextView
                 android:id="@+id/hashrate"
-                style="@style/PoolStyle"
+                style="@style/DataPoolStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0" />
 
             <TextView
-                style="@style/PoolStyle"
+                style="@style/DataPoolStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PH/s" />
@@ -97,20 +86,17 @@
             android:text="BTC/24h/Token"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/btc_earnings"
-            style="@style/PoolStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0" />
+        <LinearLayout>
 
             <TextView
-                style="@style/PoolStyle"
+                android:id="@+id/btc_earnings"
+                style="@style/DataPoolStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                style="@style/DataPoolStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BTC" />

@@ -13,15 +13,16 @@ class Datas {
     companion object {
         var btc_wallet = ""
         var eth_wallet = ""
-        var mint_info =  mutableListOf<Any>()
         var live_rewards: Float = 0F
 
         var total_payout: Float = 0F
+        var btc_would_have = 0F
         var earnings: Float = 0F // coin per day
         var date_next_payout = ""
         var days2wait = 0.0
         var days4payout = ""
         var refresh_thread = Thread { this.RefreshStake() }
+        var get_btc_would_have_thread = Thread { GetBtcWouldHave() }
 
         fun RefreshStake() {
             Thread { LiveReward() }.start()

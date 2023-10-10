@@ -9,29 +9,28 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
 import java.util.TimeZone
-import java.util.concurrent.Semaphore
+import kotlin.math.floor
 import kotlin.math.pow
 
-val MAX_CONCURRENT_REQUESTS = 5
-val semaphore = Semaphore(MAX_CONCURRENT_REQUESTS)
 
-fun Url2Json(url: String): String {
-    semaphore.acquire() // Acquire a permit, blocking if necessary until a permit is available
-    return try {
-        val connection = URL(url).openConnection()
-        val response = StringBuilder()
+fun Url2Json(url:String): String {
+    val connection = URL(url).openConnection()
+    val response = StringBuilder()
 
-        BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
-            var line: String?
-            while (inp.readLine().also { line = it } != null) {
-                response.append(line)
-            }
+    BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
+
+        var line: String?
+        while (inp.readLine().also { line = it } != null) {
+            response.append(line)
         }
-
-        response.toString()
-    } finally {
-        semaphore.release() // Release the permit
     }
+
+    var text_response: String = response.toString()
+    if("limit reached" in response.toString()){
+        Thread.sleep(100)
+        text_response = Url2Json(url)
+    }
+    return text_response
 }
 
 fun RoundBTC(btc:Float, n: Int = 8): String {
@@ -110,74 +109,19 @@ fun Days2ReachedPayout(): String {
     return Datas.days4payout
 }
 
-fun AllStakeFun(pool_id: Int): Int {
-    var nb = 1
-    try {
-        val url = BASE_URL + "&data=0x03501951000000000000000000000000000000000000000000000000000000000000000${pool_id}"
-        val json: String = Url2Json(url)
-        val response = JSONObject(json)
-        var data = response.getString("result")
-        data = data.substring(2) // Remove the first two characters
+fun GetCurrentHalving(): Double {
+    val BASE_URL = "https://chain.api.btc.com/v3/block/latest"
 
-        val start = mutableListOf<String>()
-        var index = 0
-        while (index < data.length) {
-            start.add(data.substring(index, minOf(index + 64, data.length)))
-            index += 64
-        }
-        //val startNum = start.map { it.toLong(16) }
-        nb = start.size
-
-    } catch (cause: Throwable) {
-        Log.e("Custom", "Error AllStakeFun: $cause")
-    }
-    return nb - 2
+    val response = Url2Json(BASE_URL)
+    val json = JSONObject(response)
+    val block_nb = json.getJSONObject("data").getInt("height")
+    val current_halv = floor((block_nb / BLOCK2HALVING).toDouble())
+    return current_halv +1
 }
 
-fun MyStakeFun(pool_id: Int): Int {
-    var nb = 1
-    try {
-        val url = BASE_URL + "&data=0xbfafa378000000000000000000000000000000000000000000000000000000000000000${pool_id}000000000000000000000000${Datas.eth_wallet.substring(2)}"
-        val response: String = Url2Json(url)
-        val json = JSONObject(response)
-        var data = json.getString("result")
-        data = data.substring(2) // Remove the first two characters
 
-        val start = mutableListOf<String>()
-        var index = 0
-        while (index < data.length) {
-            start.add(data.substring(index, minOf(index + 64, data.length)))
-            index += 64
-        }
-        //val startNum = start.map { it.toLong(16) }
-        nb = start.size
 
-    } catch (cause: Throwable) {
-        Log.e("Custom", "Error MyStakeFun: $cause")
-    }
-    return nb - 2
-}
-
-fun PoolEarningsFun(address:String): MutableMap<String, Double> {
-    val value = mutableMapOf(
-        "pool_earnings" to 0.0,
-        "hashrate" to 0.0
-    )
-    try {
-        val json = Url2Json("https://cruxpool.com/api/btc/miner/${address}")
-        val response = JSONObject(json)
-        val data = response.getJSONObject("data")
-        val perMin = data.getDouble("coinPerMins")
-        val perDay = perMin * 60 * 24
-        value["pool_earnings"] = perDay
-        value["hashrate"] = data.getDouble("avgHashrate")
-    } catch (cause: Throwable) {
-        Log.e("Custom", "Error in PoolEarningsFun: $cause")
-    }
-    return value
-}
-
-fun GetBtcWouldHave() {
+fun GetBtcShouldHave() {
     val dateFormat = SimpleDateFormat("dd-MM-yyyy")
     dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     val method = listOf<String>("0xad4bae6f", "0x3776d26d")
@@ -195,7 +139,7 @@ fun GetBtcWouldHave() {
             val date =dateFormat.format(Date(timeStamp.toLong() * 1000))
             val nb_btc = 1000 / GetBtcValue(date).toFloat()
             Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
-            Datas.btc_would_have += nb_btc * nb_start
+            Datas.btc_should_have += nb_btc * nb_start
         }
     }
 }

@@ -7,9 +7,6 @@ import android.widget.RemoteViews
 import java.util.Calendar
 
 
-/**
- * Implementation of App Widget functionality.
- */
 class Dashboard : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
@@ -48,13 +45,15 @@ internal fun updateAppWidget(
     val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
     val minutes = calendar[Calendar.MINUTE]
 
+    val refresh_thread = Thread { Datas.RefreshStake() }
 
-    Datas.refresh_thread.start()
-    Datas.refresh_thread.join()
+    refresh_thread.start()
+    refresh_thread.join()
+
     Datas.RefreshTextValue()
-    views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards))
+    views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards, 7))
     views.setTextViewText(R.id.widget_next_payout, DateNextPayout())
-    views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings))
+    views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings, 7))
     views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")
 
     // Instruct the widget manager to update the widget

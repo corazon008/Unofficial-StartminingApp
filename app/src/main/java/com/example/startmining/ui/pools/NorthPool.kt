@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.startmining.AllStakeFun
-import com.example.startmining.MyStakeFun
-import com.example.startmining.PoolEarningsFun
 import com.example.startmining.RoundBTC
 import com.example.startmining.RoundHashrate
 import com.example.startmining.databinding.FragmentNorthpoolBinding
@@ -61,22 +58,21 @@ class Northpool {
         fun GetStats() {
             this.my_stake_thread.start()
             this.my_stake_thread.join()
+
+            this.all_stake_thread.start()
+            this.pool_earnings_thread.start()
             if (this.my_stake > 0) {
-                this.all_stake_thread.start()
-                this.pool_earnings_thread.start()
-                this.all_stake_thread.join()
-                this.pool_earnings_thread.join()
-            } else {
-                this.all_stake_thread.start()
-                this.pool_earnings_thread.start()
+                this.WaitUntilReady()
             }
         }
 
         fun GetPoolEarnings() {
             this.my_stake_thread.join()
-            val value = PoolEarningsFun(this.address)
-            this.pool_earnings = value["pool_earnings"]!!
-            this.hashrate = value["hashrate"]!!
+            while (this.pool_earnings <= 0 || this.hashrate <= 0) {
+                val value = PoolEarningsFun(this.address)
+                this.pool_earnings = value["pool_earnings"]!!
+                this.hashrate = value["hashrate"]!!
+            }
         }
 
         fun GetMyEarnings(): Float {

@@ -14,6 +14,9 @@ You can test it on a virtual device or your own.
 <img src="./images/Dashboard.jpg" alt="Dashboard" height="600">
 
 
+### Pools
+<img src="./images/Pools1.jpg" alt="Pools1" height="600"> <img src="./images/Pools2.jpg" alt="Pools2" height="600"> <img src="./images/Pools3.jpg" alt="Pools3" height="600">
+
 
 ### Options
 <img src="./images/Options.jpg" alt="Options" height="600">

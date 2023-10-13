@@ -5,11 +5,7 @@ import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.Date
-import java.util.TimeZone
-import kotlin.math.floor
 import kotlin.math.pow
 
 
@@ -107,41 +103,6 @@ fun Days2ReachedPayout(): String {
     val days2wait = (payout) / earnings
     Datas.days4payout = days2wait.toInt().toString()
     return Datas.days4payout
-}
-
-fun GetCurrentHalving(): Double {
-    val BASE_URL = "https://chain.api.btc.com/v3/block/latest"
-
-    val response = Url2Json(BASE_URL)
-    val json = JSONObject(response)
-    val block_nb = json.getJSONObject("data").getInt("height")
-    val current_halv = floor((block_nb / BLOCK2HALVING).toDouble())
-    return current_halv +1
-}
-
-
-
-fun GetBtcShouldHave() {
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-    dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-    val method = listOf<String>("0xad4bae6f", "0x3776d26d")
-    val url =
-        "https://api.etherscan.io/api?module=account&action=txlist&address=${"0x7372C3A677ac01F389A87B4Fc8614C0d241CC971"}&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
-    val response = Url2Json(url)
-    val json = JSONObject(response)
-    val data = json.getJSONArray("result")
-
-    for (i in 0 until data.length()) {
-        val element = data.getJSONObject(i) // Obtenir l'objet JSON à l'indice i dans le tableau JSON
-        if (element.getString("methodId") in method) {
-            val timeStamp = element.getString("timeStamp")
-            val nb_start = element.getString("input").substring(method[0].length, method[0].length + 64).toInt()
-            val date =dateFormat.format(Date(timeStamp.toLong() * 1000))
-            val nb_btc = 1000 / GetBtcValue(date).toFloat()
-            Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
-            Datas.btc_should_have += nb_btc * nb_start
-        }
-    }
 }
 
 fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {

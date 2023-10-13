@@ -8,6 +8,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
+import java.util.Locale
 import java.util.TimeZone
 import kotlin.math.floor
 
@@ -25,7 +26,7 @@ class Bitcoin {
         var current_halving_nb = 0
         var next_halving_nb = 0
         var date_halving = ""
-        var time2halving = 0
+        var days2halving = 0
         var btc_should_have = 0F
         var get_btc_should_have_thread = Thread { this.GetBtcShouldHave() }
         var get_info_thread = Thread {this.GetInfo()}
@@ -44,11 +45,11 @@ class Bitcoin {
 
             val days2halving = (this.next_halving_block - this.current_block) * this.time4block / 3600 / 24
             val halving_day = LocalDate.from(LocalDate.now()).plusDays(days2halving.toLong())
-            this.time2halving = days2halving
+            this.days2halving = days2halving
             this.date_halving = "${halving_day.dayOfMonth}/${halving_day.monthValue}/${halving_day.year}"
         }
         fun GetBtcShouldHave() {
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH)
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
             val url =

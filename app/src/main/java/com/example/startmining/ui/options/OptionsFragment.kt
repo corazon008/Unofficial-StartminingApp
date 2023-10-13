@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.startmining.Bitcoin
 import com.example.startmining.Datas
 import com.example.startmining.R
 import com.example.startmining.databinding.FragmentOptionsBinding
@@ -29,6 +30,9 @@ class OptionsFragment : Fragment() {
 
         binding.BTCinput.setText(Datas.btc_wallet)
         binding.ETHinput.setText(Datas.eth_wallet)
+
+        val info = binding.halvingInfo.text.toString()
+        binding.halvingInfo.text = info.replace("DATE", Bitcoin.date_halving)
 
         val button = binding.submit
         button.setOnClickListener {

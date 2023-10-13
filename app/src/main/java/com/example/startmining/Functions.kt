@@ -112,3 +112,21 @@ fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {
     val json = JSONObject(response)
     return json.getJSONObject("market_data").getJSONObject("current_price").getString("usd")
 }
+
+fun ComputeDateRoi(): String {
+    val earnings = Datas.earnings
+    val btc_should_have = Bitcoin.btc_should_have
+
+
+    val days_until_halving = Bitcoin.days2halving
+    val days2wait = (btc_should_have - earnings * days_until_halving) / earnings
+    val ROI_date:LocalDate
+    ROI_date = if (days2wait < days_until_halving){
+        LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
+    }
+    else{
+        LocalDate.from(LocalDate.now()).plusDays((days_until_halving + (btc_should_have - earnings * days_until_halving) / (earnings / 2)).toLong())
+
+    }
+    return "${ROI_date.dayOfMonth}/${ROI_date.monthValue}/${ROI_date.year}"
+}

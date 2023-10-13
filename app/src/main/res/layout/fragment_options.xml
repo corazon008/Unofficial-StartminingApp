@@ -7,6 +7,14 @@
     tools:context=".ui.options.OptionsFragment"
     android:background="@drawable/bg">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your bitcoin address :"
+        style="@style/TextStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/BTCinput"
@@ -20,6 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your ethereum address :"
+        style="@style/TextStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BTCinput" />
+
     <EditText
         android:id="@+id/ETHinput"
         android:layout_width="fill_parent"
@@ -32,33 +49,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save change"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ETHinput" />
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your ethereum address :"
-        style="@style/TextStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BTCinput" />
+        app:layout_constraintTop_toBottomOf="@+id/ETHinput">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your bitcoin address :"
-        style="@style/TextStyle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/halving_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ROI is calculated with your earnings at the curent time. It also takes into account the halving calculated on the DATE. Since halving divide by 2 the rewartds, estimated rewards are divided by 2 when computing the ROI." />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

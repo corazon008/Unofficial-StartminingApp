@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.startmining.Bitcoin
+import com.example.startmining.ComputeDateRoi
 import com.example.startmining.Datas
 import com.example.startmining.DateNextPayout
 import com.example.startmining.Days2ReachedPayout
@@ -36,7 +37,7 @@ class DashboardFragment : Fragment() {
             binding.Ratio.progress = (Datas.live_rewards / 0.005 * 100).toInt()
             binding.btcShouldHave.text = RoundBTC(Bitcoin.btc_should_have)
             binding.btcShouldHaveProgress.progress = (Datas.total_payout / Bitcoin.btc_should_have * 100).toInt()
-            binding.dateHalving.text = Bitcoin.date_halving
+            binding.dateRoi.text = ComputeDateRoi()
 
             // Planifiez la prochaine exécution de la mise à jour
             //mHandler.postDelayed(this, 100)

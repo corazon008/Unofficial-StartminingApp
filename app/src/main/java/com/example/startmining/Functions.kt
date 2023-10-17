@@ -84,9 +84,8 @@ fun DateNextPayout(): String {
     if (earnings == 0F){
         return "NaN"
     }
-    val payout = 0.005
 
-    val days2wait = (payout - rewards) / earnings
+    val days2wait = (THRESHOLD - rewards) / earnings
     val payout_day = LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
     Datas.days2wait = days2wait
     Datas.date_next_payout = "${payout_day.dayOfMonth}/${payout_day.monthValue}"
@@ -98,9 +97,8 @@ fun Days2ReachedPayout(): String {
     if (earnings == 0F){
         return "NaN"
     }
-    val payout = 0.005
 
-    val days2wait = (payout) / earnings
+    val days2wait = (THRESHOLD) / earnings
     Datas.days4payout = days2wait.toInt().toString()
     return Datas.days4payout
 }
@@ -113,20 +111,26 @@ fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {
     return json.getJSONObject("market_data").getJSONObject("current_price").getString("usd")
 }
 
-fun ComputeDateRoi(): String {
+fun ComputeDateRoi(halving: Boolean =true): String {
     val earnings = Datas.earnings
     val btc_should_have = Bitcoin.btc_should_have
-
+    val total_payout = Datas.total_payout
+    val live_rewards = Datas.live_rewards
 
     val days_until_halving = Bitcoin.days2halving
-    val days2wait = (btc_should_have - earnings * days_until_halving) / earnings
+    val btc2win = btc_should_have - total_payout - live_rewards
+    val days2wait =  btc2win / earnings
     val ROI_date:LocalDate
-    ROI_date = if (days2wait < days_until_halving){
-        LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
+    val now = LocalDate.from(LocalDate.now())
+    ROI_date = if (halving) {
+        if (days2wait <= days_until_halving) {
+            now.plusDays(days2wait.toLong())
+        } else {
+            now.plusDays((days_until_halving + (btc2win - earnings * days_until_halving) / (earnings / 2)).toLong())
+        }
     }
     else{
-        LocalDate.from(LocalDate.now()).plusDays((days_until_halving + (btc_should_have - earnings * days_until_halving) / (earnings / 2)).toLong())
-
+        now.plusDays(days2wait.toLong())
     }
     return "${ROI_date.dayOfMonth}/${ROI_date.monthValue}/${ROI_date.year}"
 }

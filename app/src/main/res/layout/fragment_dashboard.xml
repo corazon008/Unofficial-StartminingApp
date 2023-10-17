@@ -210,10 +210,23 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date ROI :" />
+            android:text="Date ROI without halving :" />
 
         <TextView
-            android:id="@+id/date_roi"
+            android:id="@+id/date_roi_without_halving"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01/01/1999" />
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date ROI with halving :" />
+
+        <TextView
+            android:id="@+id/date_roi_with_halving"
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

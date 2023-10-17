@@ -16,6 +16,7 @@ import kotlin.math.floor
 const val CONTRACT_ADDRESS: String = "0xb4a3c079acbd57668bf5292c13878f9225678381"
 const val BASE_URL: String =
     "https://api.etherscan.io/api?module=proxy&action=eth_call&to=${CONTRACT_ADDRESS}&tag=latest&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
+const val THRESHOLD = 0.005
 
 class Bitcoin {
     companion object {

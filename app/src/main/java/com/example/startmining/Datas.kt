@@ -54,7 +54,7 @@ class Bitcoin {
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
             val url =
-                "https://api.etherscan.io/api?module=account&action=txlist&address=${"0x7372C3A677ac01F389A87B4Fc8614C0d241CC971"}&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
+                "https://api.etherscan.io/api?module=account&action=txlist&address=${Datas.eth_wallet}&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
             val response = Url2Json(url)
             val json = JSONObject(response)
             val data = json.getJSONArray("result")

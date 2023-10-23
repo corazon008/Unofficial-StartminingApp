@@ -8,11 +8,7 @@ import java.net.URL
 import java.time.LocalDate
 import kotlin.math.pow
 
-fun build_eth_url(
-    vararg kwargs: Pair<String, Any>,
-    module: String = "proxy",
-    action: String = "eth_call"
-): String {
+fun build_eth_url(vararg kwargs: Pair<String, String>,module: String = "proxy",action: String = "eth_call"): String {
     val CONTRACT_ADDRESS = "0xb4a3c079acbd57668bf5292c13878f9225678381"
     val API_KEY = "ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
     var url = "https://api.etherscan.io/api?module=${module}&action=${action}&apikey=${API_KEY}&"

@@ -13,9 +13,6 @@ import java.util.TimeZone
 import kotlin.math.floor
 
 
-const val CONTRACT_ADDRESS: String = "0xb4a3c079acbd57668bf5292c13878f9225678381"
-const val BASE_URL: String =
-    "https://api.etherscan.io/api?module=proxy&action=eth_call&to=${CONTRACT_ADDRESS}&tag=latest&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
 const val THRESHOLD = 0.005
 
 class Bitcoin {
@@ -31,7 +28,6 @@ class Bitcoin {
         var btc_should_have = 0F
         var get_btc_should_have_thread = Thread { this.GetBtcShouldHave() }
         var get_info_thread = Thread {this.GetInfo()}
-
 
         fun GetInfo() {
             val BASE_URL = "https://chain.api.btc.com/v3/block/latest"
@@ -49,12 +45,12 @@ class Bitcoin {
             this.days2halving = days2halving
             this.date_halving = "${halving_day.dayOfMonth}/${halving_day.monthValue}/${halving_day.year}"
         }
+
         fun GetBtcShouldHave() {
             val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH)
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
-            val url =
-                "https://api.etherscan.io/api?module=account&action=txlist&address=${Datas.eth_wallet}&apikey=ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
+            val url = build_eth_url("address" to Datas.eth_wallet, module = "account", action= "txlist")
             val response = Url2Json(url)
             val json = JSONObject(response)
             val data = json.getJSONArray("result")

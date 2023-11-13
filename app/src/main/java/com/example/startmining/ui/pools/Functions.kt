@@ -13,7 +13,7 @@ fun AllStakeFun(pool_id: Int): Int {
         val json: String = Url2Json(url)
         val response = JSONObject(json)
         var data = response.getString("result")
-        Log.e("Custom", "AllStakeFun for -1 : data=${data}")
+        Log.i("Custom", "AllStakeFun for $pool_id : data=${data}")
         data = data.substring(2) // Remove the first two characters
 
         val start = mutableListOf<String>()

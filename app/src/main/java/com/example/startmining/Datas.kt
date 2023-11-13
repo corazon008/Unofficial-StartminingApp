@@ -52,20 +52,27 @@ class Bitcoin {
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
             val url = build_eth_url("address" to Datas.eth_wallet, module = "account", action= "txlist")
             val response = Url2Json(url)
-            val json = JSONObject(response)
-            val data = json.getJSONArray("result")
+            try {
+                val json = JSONObject(response)
+                val data = json.getJSONArray("result")
 
-            for (i in 0 until data.length()) {
-                val element = data.getJSONObject(i) // Obtenir l'objet JSON à l'indice i dans le tableau JSON
-                if (element.getString("methodId") in method) {
-                    val timeStamp = element.getString("timeStamp")
-                    val nb_start = element.getString("input").substring(method[0].length, method[0].length + 64).toInt()
-                    val date =dateFormat.format(Date(timeStamp.toLong() * 1000))
-                    val nb_btc = 1000 / GetBtcValue(date).toFloat()
-                    Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
-                    this.btc_should_have += nb_btc * nb_start
+                for (i in 0 until data.length()) {
+                    val element =
+                        data.getJSONObject(i) // Obtenir l'objet JSON à l'indice i dans le tableau JSON
+                    if (element.getString("methodId") in method) {
+                        val timeStamp = element.getString("timeStamp")
+                        val nb_start = element.getString("input")
+                            .substring(method[0].length, method[0].length + 64).toInt()
+                        val date = dateFormat.format(Date(timeStamp.toLong() * 1000))
+                        val nb_btc = 1000 / GetBtcValue(date).toFloat()
+                        Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
+                        this.btc_should_have += nb_btc * nb_start
+                    }
                 }
+            } catch (cause: Throwable) {
+                Log.e("Custom", "Error GetBtcShouldHave: $cause")
             }
+
         }
     }
 

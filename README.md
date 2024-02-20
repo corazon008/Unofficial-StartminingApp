@@ -16,7 +16,7 @@ Open Android Studio in File -> New -> Import Project and choose the decompressed
 ### 4 - Install an emulator
 If you have an Android Device you can skip this part.
 To install an emulator to try the App you can follow this [video](https://www.youtube.com/watch?v=GhuiNcOEv1A).
-## Be carefull !! To be sure that the App is running choose the API 34 when installing the emulator
+### Be carefull !! To be sure that the App is running choose the API 34 when installing the emulator
 
 ### 5 - Test the App on real device
 Follow this [video](https://www.youtube.com/watch?v=Wp6KbJcnxGU&t=27s) to add a real device to Android Studio.

@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
-    implementation("org.json:json:20231013")
+    implementation("org.json:json:20240205")
 }
 
 dependencies {

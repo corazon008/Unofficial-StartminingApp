@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.startmining"
         minSdk = 33
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 2
         versionName = "2"
 
@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("org.json:json:20240205")
+    implementation("org.json:json:20240303")
 }
 
 dependencies {

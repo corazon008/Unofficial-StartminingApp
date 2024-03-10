@@ -67,7 +67,7 @@ fun PoolEarningsFun(address:String): MutableMap<String, Double> {
         val perMin = data.getDouble("coinPerMins")
         val perDay = perMin * 60 * 24
         value["pool_earnings"] = perDay
-        value["hashrate"] = data.getDouble("avgHashrate")
+        value["hashrate"] = data.getDouble("realtimeHashrate")
     } catch (cause: Throwable) {
         Log.e("Custom", "Error in PoolEarningsFun: $cause")
     }

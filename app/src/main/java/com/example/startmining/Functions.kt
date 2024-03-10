@@ -111,6 +111,9 @@ fun Days2ReachedPayout(): String {
 }
 
 fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {
+    /*
+    Return the price of bitcoin at day day
+     */
     val url =
         "https://api.coingecko.com/api/v3/coins/${crypto}/history?date=${day}&localization=false"
     val response = Url2Json(url)

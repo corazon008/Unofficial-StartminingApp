@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.startmining.ui.pools.Genesis
 import com.example.startmining.ui.pools.Northpool
 import com.example.startmining.ui.pools.Origin
+import com.example.startmining.ui.pools.Pulse
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -30,6 +31,9 @@ class Bitcoin {
         var get_info_thread = Thread {this.GetInfo()}
 
         fun GetInfo() {
+            /*
+            Get information about halving
+             */
             val BASE_URL = "https://chain.api.btc.com/v3/block/latest"
 
             val response = Url2Json(BASE_URL)
@@ -47,6 +51,9 @@ class Bitcoin {
         }
 
         fun GetBtcShouldHave() {
+            /*
+            Number of bitcoin that the user should have if he bought BTC instead of START
+             */
             val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH)
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
@@ -100,6 +107,7 @@ class Datas {
                 Thread { Origin.GetStats() },
                 Thread { Genesis.GetStats() },
                 Thread { Northpool.GetStats() },
+                Thread { Pulse.GetStats() },
             )
             for (t in ThreadList) {
                 t.start()
@@ -112,7 +120,7 @@ class Datas {
         fun RefreshTextValue() {
             this.refresh_thread.join()
             this.earnings =
-                (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings())
+                (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings() + Pulse.GetMyEarnings())
         }
     }
 }

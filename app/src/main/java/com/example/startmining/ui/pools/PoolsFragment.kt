@@ -38,7 +38,7 @@ class PoolsFragment : Fragment() {
 
 class PoolsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
-        return 4 // Nombre total de fragments
+        return 5 // Nombre total de fragments
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -47,6 +47,7 @@ class PoolsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
             1 -> GenesisFragment()
             2 -> NorthpoolFragment()
             3 -> PulseFragment()
+            4 -> HorizonFragment()
             else -> throw IllegalArgumentException("Invalid position: $position")
         }
     }

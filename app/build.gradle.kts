@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.startmining"
-        minSdk = 33
+        minSdk = 34
         targetSdk = 34
         versionCode = 2
         versionName = "2"

@@ -2,6 +2,7 @@ package com.example.startmining
 
 import android.util.Log
 import com.example.startmining.ui.pools.Genesis
+import com.example.startmining.ui.pools.Horizon
 import com.example.startmining.ui.pools.Northpool
 import com.example.startmining.ui.pools.Origin
 import com.example.startmining.ui.pools.Pulse
@@ -86,7 +87,6 @@ class Bitcoin {
 }
 
 class Datas {
-
     companion object {
         var btc_wallet = ""
         var eth_wallet = ""
@@ -108,6 +108,8 @@ class Datas {
                 Thread { Genesis.GetStats() },
                 Thread { Northpool.GetStats() },
                 Thread { Pulse.GetStats() },
+                Thread { Horizon.GetStats() }
+
             )
             for (t in ThreadList) {
                 t.start()
@@ -120,7 +122,7 @@ class Datas {
         fun RefreshTextValue() {
             this.refresh_thread.join()
             this.earnings =
-                (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings() + Pulse.GetMyEarnings())
+                (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings() + Pulse.GetMyEarnings() + Horizon.GetMyEarnings())
         }
     }
 }

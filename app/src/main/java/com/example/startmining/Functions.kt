@@ -1,6 +1,7 @@
 package com.example.startmining
 
 import android.util.Log
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -31,8 +32,8 @@ fun Url2Json(url: String): String {
     }
 
     var text_response: String = response.toString()
-    if ("limit reached" in response.toString()) {
-        Thread.sleep(100)
+    if ("limit" in response.toString()) {
+        Thread.sleep(200)
         text_response = Url2Json(url)
     }
     return text_response
@@ -110,15 +111,22 @@ fun Days2ReachedPayout(): String {
     return Datas.days4payout
 }
 
-fun GetBtcValue(day: String, crypto: String = "bitcoin"): String {
+fun GetBtcValue(timestamp_: Long, crypto: String = "bitcoin"): Double {
+    val timestamp = timestamp_ * 1000
     /*
     Return the price of bitcoin at day day
-     */
-    val url =
-        "https://api.coingecko.com/api/v3/coins/${crypto}/history?date=${day}&localization=false"
+     */val url =
+        "https://data.block.cc/api/v3/price/history?slug=${crypto}&api_key=LUTWBXRYDG9J0QLH4P7TN0IANNOBA9ODVOJELW3Y&start=${timestamp}&end=${timestamp + 600_000}"
     val response = Url2Json(url)
-    val json = JSONObject(response)
-    return json.getJSONObject("market_data").getJSONObject("current_price").getString("usd")
+    try {
+
+        val json = JSONArray(response)
+        return json.getJSONObject(0).getDouble("u")
+    } catch (cause: Throwable) {
+        Log.e("Custom", "Error GetBtcValue: $cause")
+        Log.e("Custom", "Error GetBtcValue response: $response")
+        return 0.0
+    }
 }
 
 fun ComputeDateRoi(halving: Boolean = true): String {

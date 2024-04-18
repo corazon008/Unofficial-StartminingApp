@@ -71,10 +71,14 @@ class Bitcoin {
                         val timeStamp = element.getString("timeStamp")
                         val nb_start = element.getString("input")
                             .substring(method[0].length, method[0].length + 64).toInt()
+                        Log.e("Custom", timeStamp.toLong().toString())
                         val date = dateFormat.format(Date(timeStamp.toLong() * 1000))
-                        val nb_btc = 1000 / GetBtcValue(date).toFloat()
-                        Log.e("Test", "${date}  ${nb_start}     ${nb_btc}")
+                        val nb_btc = 1000 / GetBtcValue(timeStamp.toLong()).toFloat()
+                        Log.e("Test", "${date}  ${nb_start}  ${nb_btc}")
                         this.btc_should_have += nb_btc * nb_start
+                    }
+                    else{
+                        Log.i("methodId", element.getString("methodId"))
                     }
                 }
             } catch (cause: Throwable) {

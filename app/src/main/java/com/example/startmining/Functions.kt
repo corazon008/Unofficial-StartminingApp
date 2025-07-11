@@ -4,12 +4,19 @@ import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.FileNotFoundException
 import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import java.net.URL
 import java.time.LocalDate
+import javax.net.ssl.HttpsURLConnection
 import kotlin.math.pow
 
-fun build_eth_url(vararg kwargs: Pair<String, String>,module: String = "proxy",action: String = "eth_call"): String {
+fun build_eth_url(
+    vararg kwargs: Pair<String, String>,
+    module: String = "proxy",
+    action: String = "eth_call"
+): String {
     val CONTRACT_ADDRESS = "0xb4a3c079acbd57668bf5292c13878f9225678381"
     val API_KEY = "ZS4NECH7KXSBFJCUTPAKBWXWSH1PSPVX72"
     var url = "https://api.etherscan.io/api?module=${module}&action=${action}&apikey=${API_KEY}&"
@@ -21,22 +28,45 @@ fun build_eth_url(vararg kwargs: Pair<String, String>,module: String = "proxy",a
 }
 
 fun Url2Json(url: String): String {
-    val connection = URL(url).openConnection()
-    val response = StringBuilder()
+    val delay: Long = 300
+    var attempt = 0
+    val maxAttempts = 5
 
-    BufferedReader(InputStreamReader(connection.getInputStream())).use { inp ->
-        var line: String?
-        while (inp.readLine().also { line = it } != null) {
-            response.append(line)
+    while (attempt < maxAttempts) {
+        try {
+            val connection = URL(url).openConnection() as HttpsURLConnection
+            val response = StringBuilder()
+
+            if (connection.responseCode != 200) {
+                Thread.sleep(delay)
+                attempt++
+                continue
+            }
+
+            BufferedReader(InputStreamReader(connection.inputStream)).use { inp ->
+                var line: String?
+                while (inp.readLine().also { line = it } != null) {
+                    response.append(line)
+                }
+            }
+
+            val text_response: String = response.toString()
+
+            if ("imit" in text_response) { // Pour "limit" et "Limit"
+                Thread.sleep(delay)
+                attempt++
+                continue
+            }
+
+            return text_response
+        } catch (e: FileNotFoundException) {
+            Thread.sleep(delay)
+            attempt++
+            continue
         }
     }
 
-    var text_response: String = response.toString()
-    if ("limit" in response.toString()) {
-        Thread.sleep(200)
-        text_response = Url2Json(url)
-    }
-    return text_response
+    throw Exception("Failed to retrieve a valid response after $maxAttempts attempts")
 }
 
 fun RoundBTC(btc: Float, n: Int = 8): String {
@@ -111,20 +141,27 @@ fun Days2ReachedPayout(): String {
     return Datas.days4payout
 }
 
-fun GetBtcValue(timestamp_: Long, crypto: String = "bitcoin"): Double {
-    val timestamp = timestamp_ * 1000
+fun GetBtcValue(timestamp: Long, crypto: String = "bitcoin"): Double {
     /*
     Return the price of bitcoin at day day
-     */val url =
-        "https://data.block.cc/api/v3/price/history?slug=${crypto}&api_key=LUTWBXRYDG9J0QLH4P7TN0IANNOBA9ODVOJELW3Y&start=${timestamp}&end=${timestamp + 600_000}"
+     */
+    val url =
+        "https://data.block.cc/api/v3/price/history?slug=${crypto}&api_key=X0QVBMSGHYQ2F7GGQRDJHRYXUYH8QGAOEWAMU9VA&start=${timestamp}&end=${timestamp + 600_000}"
     val response = Url2Json(url)
     try {
-
+        val json = JSONObject(response)
+        val error = json.getString("m")
+        return GetBtcValue(timestamp, crypto)
+    } catch (cause: Throwable) {
+        Log.e("Custom", "Error GetBtcValue1: $cause")
+        Log.e("Custom", "Error GetBtcValue1 response: $response")
+    }
+    try {
         val json = JSONArray(response)
         return json.getJSONObject(0).getDouble("u")
     } catch (cause: Throwable) {
-        Log.e("Custom", "Error GetBtcValue: $cause")
-        Log.e("Custom", "Error GetBtcValue response: $response")
+        Log.e("Custom", "Error GetBtcValue2: $cause")
+        Log.e("Custom", "Error GetBtcValue2 response: $response")
         return 0.0
     }
 }

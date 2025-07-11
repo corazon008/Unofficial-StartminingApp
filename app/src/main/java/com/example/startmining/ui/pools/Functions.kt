@@ -35,6 +35,7 @@ fun MyStakeFun(pool_id: Int): Int {
     var nb = 2
     try {
         val url = build_eth_url("data" to "0xbfafa378000000000000000000000000000000000000000000000000000000000000000${pool_id}000000000000000000000000${Datas.eth_wallet.substring(2)}")
+        Log.i("Custom", "MyStakeFun for $pool_id : url=${url}")
         val response: String = Url2Json(url)
         val json = JSONObject(response)
         var data = json.getString("result")

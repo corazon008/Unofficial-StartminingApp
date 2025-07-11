@@ -18,11 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //make all the requests during the launch
-        val sharedPref =
-            application?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
-
-        Datas.btc_wallet = sharedPref!!.getString(getString(R.string.btc_address), "").toString()
-        Datas.eth_wallet = sharedPref.getString(getString(R.string.eth_address), "").toString()
+        Datas.LoadWalletsAddress(applicationContext)
 
         Datas.refresh_thread.start()
         Bitcoin.get_btc_should_have_thread.start()

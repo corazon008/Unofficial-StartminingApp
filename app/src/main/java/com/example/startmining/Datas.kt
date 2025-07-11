@@ -1,5 +1,6 @@
 package com.example.startmining
 
+import android.content.Context
 import android.util.Log
 import com.example.startmining.ui.pools.Genesis
 import com.example.startmining.ui.pools.Horizon
@@ -29,7 +30,7 @@ class Bitcoin {
         var days2halving = 0
         var btc_should_have = 0F
         var get_btc_should_have_thread = Thread { this.GetBtcShouldHave() }
-        var get_info_thread = Thread {this.GetInfo()}
+        var get_info_thread = Thread { this.GetInfo() }
 
         fun GetInfo() {
             /*
@@ -45,10 +46,12 @@ class Bitcoin {
             this.next_halving_nb = this.current_halving_nb + 1
             this.next_halving_block = this.next_halving_nb * this.BLOCK2HALVING
 
-            val days2halving = (this.next_halving_block - this.current_block) * this.time4block / 3600 / 24
+            val days2halving =
+                (this.next_halving_block - this.current_block) * this.time4block / 3600 / 24
             val halving_day = LocalDate.from(LocalDate.now()).plusDays(days2halving.toLong())
             this.days2halving = days2halving
-            this.date_halving = "${halving_day.dayOfMonth}/${halving_day.monthValue}/${halving_day.year}"
+            this.date_halving =
+                "${halving_day.dayOfMonth}/${halving_day.monthValue}/${halving_day.year}"
         }
 
         fun GetBtcShouldHave() {
@@ -58,27 +61,27 @@ class Bitcoin {
             val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH)
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val method = listOf<String>("0xad4bae6f", "0x3776d26d")
-            val url = build_eth_url("address" to Datas.eth_wallet, module = "account", action= "txlist")
+            val url =
+                build_eth_url("address" to Datas.eth_wallet, module = "account", action = "txlist")
             val response = Url2Json(url)
             try {
                 val json = JSONObject(response)
                 val data = json.getJSONArray("result")
+                val length = data.length()
 
-                for (i in 0 until data.length()) {
+                for (i in 0 until length) {
                     val element =
                         data.getJSONObject(i) // Obtenir l'objet JSON à l'indice i dans le tableau JSON
                     if (element.getString("methodId") in method) {
-                        val timeStamp = element.getString("timeStamp")
+                        val timeStamp = element.getString("timeStamp").toLong() * 1000
                         val nb_start = element.getString("input")
                             .substring(method[0].length, method[0].length + 64).toInt()
-                        Log.e("Custom", timeStamp.toLong().toString())
-                        val date = dateFormat.format(Date(timeStamp.toLong() * 1000))
-                        val nb_btc = 1000 / GetBtcValue(timeStamp.toLong()).toFloat()
+                        val date = dateFormat.format(Date(timeStamp))
+                        val nb_btc = 1000 / GetBtcValue(timeStamp).toFloat()
                         Log.e("Test", "${date}  ${nb_start}  ${nb_btc}")
                         this.btc_should_have += nb_btc * nb_start
-                    }
-                    else{
-                        Log.i("methodId", element.getString("methodId"))
+                    } else {
+                        //Log.i("methodId", element.getString("methodId"))
                     }
                 }
             } catch (cause: Throwable) {
@@ -92,8 +95,22 @@ class Bitcoin {
 
 class Datas {
     companion object {
-        var btc_wallet = ""
-        var eth_wallet = ""
+        var btc_wallet: String = ""
+            get() {
+                return field
+            }
+            private set(value) {
+                field = value
+            }
+
+        var eth_wallet: String = ""
+            get() {
+                return field
+            }
+            private set(value) {
+                field = value
+            }
+
         var live_rewards: Float = 0F
 
         var total_payout: Float = 0F
@@ -128,5 +145,24 @@ class Datas {
             this.earnings =
                 (Origin.GetMyEarnings() + Genesis.GetMyEarnings() + Northpool.GetMyEarnings() + Pulse.GetMyEarnings() + Horizon.GetMyEarnings())
         }
+
+        fun LoadWalletsAddress(application: Context?) {
+            val sharedPref =
+                application?.getSharedPreferences(application.getString(R.string.file_name), Context.MODE_PRIVATE)
+            this.btc_wallet = sharedPref!!.getString(application.getString(R.string.btc_address), "0x0000000000000000000000000000000000000000").toString()
+            this.eth_wallet = sharedPref.getString(application.getString(R.string.eth_address), "0x0000000000000000000000000000000000000000").toString()
+        }
+
+        fun SaveWalletsAddress(application: Context?, btc_address: String, eth_address: String) {
+            val sharedPref = application?.getSharedPreferences(application.getString(R.string.file_name), Context.MODE_PRIVATE)
+            if (sharedPref != null) {
+                with (sharedPref.edit()) {
+                    putString(application.getString(R.string.btc_address), btc_address.toString())
+                    putString(application.getString(R.string.eth_address), eth_address.toString())
+                    commit()
+                }
+            }
+        }
+
     }
 }

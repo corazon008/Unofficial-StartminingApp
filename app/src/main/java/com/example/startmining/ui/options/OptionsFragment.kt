@@ -36,18 +36,7 @@ class OptionsFragment : Fragment() {
 
         val button = binding.submit
         button.setOnClickListener {
-            val btc_address = binding.BTCinput.text
-            val eth_address = binding.ETHinput.text
-            val sharedPref = activity?.getSharedPreferences(getString(R.string.file_name), Context.MODE_PRIVATE)
-            if (sharedPref != null) {
-                with (sharedPref.edit()) {
-                    putString(getString(R.string.btc_address), btc_address.toString())
-                    putString(getString(R.string.eth_address), eth_address.toString())
-                    commit()
-
-                }
-            }
-
+            Datas.SaveWalletsAddress(activity, binding.BTCinput.text.toString(), binding.ETHinput.text.toString())
         }
         return root
     }

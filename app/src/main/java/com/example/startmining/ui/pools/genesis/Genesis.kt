@@ -1,45 +1,14 @@
-package com.example.startmining.ui.pools
+package com.example.startmining.ui.pools.genesis
 
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.example.startmining.RoundBTC
-import com.example.startmining.RoundHashrate
-import com.example.startmining.databinding.FragmentNorthpoolBinding
+import com.example.startmining.ui.pools.AllStakeFun
+import com.example.startmining.ui.pools.MyStakeFun
+import com.example.startmining.ui.pools.PoolEarningsFun
 
-class NorthpoolFragment : Fragment() {
-    private var _binding: FragmentNorthpoolBinding? = null
-    private val binding get() = _binding!!
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNorthpoolBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        Northpool.WaitUntilReady()
-        binding.occupancy.text = Northpool.all_stake.toString()
-        binding.hashrate.text = RoundHashrate(Northpool.hashrate)
-        binding.btcEarnings.text = RoundBTC((Northpool.pool_earnings / Northpool.all_stake).toFloat(), 6)
-        binding.myStake.text = Northpool.my_stake.toString()
-        // Inflate the layout for this fragment
-        // inflater.inflate(R.layout.fragment_origin, container, false)
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}
-
-class Northpool {
+class Genesis {
     companion object {
-        val address = "bc1qyjp7kadrtr8j7gvvs9jej9c790jpmal4cwehle"
-        val pool_id = 3
+        val address = "bc1p94llwnug0zv9zvk8lj9g43s6ul5nssf9yl5pn8sdlyqj3rdy90qq34ck00"
+        val pool_id = 2
         var my_stake = 0
         var all_stake = 1
         var my_earnings: Double = 0.0
@@ -93,6 +62,5 @@ class Northpool {
         fun GetMyStake() {
             this.my_stake = MyStakeFun(this.pool_id)
         }
-
     }
 }

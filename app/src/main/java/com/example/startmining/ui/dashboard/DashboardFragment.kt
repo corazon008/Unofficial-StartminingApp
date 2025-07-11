@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.startmining.Bitcoin
 import com.example.startmining.ComputeDateRoi
+import com.example.startmining.Constants
 import com.example.startmining.Datas
 import com.example.startmining.DateNextPayout
 import com.example.startmining.Days2ReachedPayout
 import com.example.startmining.RoundBTC
-import com.example.startmining.THRESHOLD
 import com.example.startmining.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -35,7 +35,7 @@ class DashboardFragment : Fragment() {
             binding.earnings.text = RoundBTC(Datas.earnings)
             binding.nextPayout.text = DateNextPayout()
             binding.reachedPayout.text = Days2ReachedPayout()
-            binding.Ratio.progress = (Datas.live_rewards / THRESHOLD * 100).toInt()
+            binding.Ratio.progress = (Datas.live_rewards / Constants.PAYMENT_THRESHOLD * 100).toInt()
             binding.btcShouldHave.text = RoundBTC(Bitcoin.btc_should_have)
             binding.btcShouldHaveProgress.progress = (Datas.total_payout / Bitcoin.btc_should_have * 100).toInt()
             binding.dateRoiWithHalving.text = ComputeDateRoi(halving = true)

@@ -8,6 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.startmining.databinding.FragmentPoolsBinding
+import com.example.startmining.ui.pools.genesis.GenesisFragment
+import com.example.startmining.ui.pools.horizon.HorizonFragment
+import com.example.startmining.ui.pools.northPool.NorthPoolFragment
+import com.example.startmining.ui.pools.origin.OriginFragment
+import com.example.startmining.ui.pools.pulse.PulseFragment
 
 class PoolsFragment : Fragment() {
 
@@ -45,7 +50,7 @@ class PoolsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         return when (position) {
             0 -> OriginFragment()
             1 -> GenesisFragment()
-            2 -> NorthpoolFragment()
+            2 -> NorthPoolFragment()
             3 -> PulseFragment()
             4 -> HorizonFragment()
             else -> throw IllegalArgumentException("Invalid position: $position")

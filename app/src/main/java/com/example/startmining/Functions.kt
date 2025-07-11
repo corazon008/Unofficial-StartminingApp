@@ -123,7 +123,7 @@ fun DateNextPayout(): String {
         return "NaN"
     }
 
-    val days2wait = (THRESHOLD - rewards) / earnings
+    val days2wait = (Constants.PAYMENT_THRESHOLD - rewards) / earnings
     val payout_day = LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
     Datas.days2wait = days2wait
     Datas.date_next_payout = "${payout_day.dayOfMonth}/${payout_day.monthValue}"
@@ -136,7 +136,7 @@ fun Days2ReachedPayout(): String {
         return "NaN"
     }
 
-    val days2wait = (THRESHOLD) / earnings
+    val days2wait = (Constants.PAYMENT_THRESHOLD) / earnings
     Datas.days4payout = days2wait.toInt().toString()
     return Datas.days4payout
 }

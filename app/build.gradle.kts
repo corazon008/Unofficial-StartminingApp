@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("org.json:json:20250517")
+    implementation("com.squareup.okhttp3:okhttp:5.1.0")
 }
 
 dependencies {

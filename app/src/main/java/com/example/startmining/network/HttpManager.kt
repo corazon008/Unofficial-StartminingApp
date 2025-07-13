@@ -35,28 +35,4 @@ object HttpManager {
             }
         }
     }
-
-
-    fun <T> get1(url: String, deserializer: DeserializationStrategy<T>): T {
-        semaphore.acquire()
-        try {
-            val request = Request.Builder().url(url).build()
-            val response = client.newCall(request).execute()
-
-            if (!response.isSuccessful) {
-                throw Exception("HTTP ${response.code} ${response.message}")
-            }
-
-            val body = response.body?.string()
-                ?: throw Exception("Empty response body")
-
-            return json.decodeFromString(deserializer, body)
-
-        } catch (e: Exception) {
-            throw RuntimeException("HTTP request failed: ${e.message}", e)
-        } finally {
-            semaphore.release()
-        }
-    }
-
 }

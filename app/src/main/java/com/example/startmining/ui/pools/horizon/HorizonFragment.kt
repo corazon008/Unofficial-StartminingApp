@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.startmining.RoundBTC
 import com.example.startmining.RoundHashrate
+import com.example.startmining.SessionManager
 import com.example.startmining.databinding.FragmentHorizonBinding
+import com.example.startmining.network.pools.PoolsService
 
 class HorizonFragment : Fragment() {
     private var _binding: FragmentHorizonBinding? = null
@@ -19,11 +21,15 @@ class HorizonFragment : Fragment() {
         _binding = FragmentHorizonBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        Horizon.WaitUntilReady()
-        binding.occupancy.text = Horizon.all_stake.toString()
-        binding.hashrate.text = RoundHashrate(Horizon.hashrate)
-        binding.btcEarnings.text = RoundBTC((Horizon.pool_earnings / Horizon.all_stake).toFloat(), 6)
-        binding.myStake.text = Horizon.my_stake.toString()
+        val poolId = PoolsService.horizon_pool_id
+
+        SessionManager.poolListInfo.observe(viewLifecycleOwner) {
+            binding.occupancy.text = it[poolId-1].nbStakedNft.toString()
+            binding.hashrate.text = RoundHashrate(it[poolId-1].hashrate)
+            binding.btcEarnings.text = RoundBTC((it[poolId-1].poolEarnings / it[poolId-1].nbStakedNft).toFloat(), 6)
+            binding.myStake.text = it[poolId-1].nbStakedNftUser.toString()
+        }
+
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)
         return root

@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.startmining.RoundBTC
 import com.example.startmining.RoundHashrate
+import com.example.startmining.SessionManager
 import com.example.startmining.databinding.FragmentNorthpoolBinding
+import com.example.startmining.network.pools.PoolsService
 
 class NorthPoolFragment : Fragment() {
     private var _binding: FragmentNorthpoolBinding? = null
@@ -19,11 +21,16 @@ class NorthPoolFragment : Fragment() {
         _binding = FragmentNorthpoolBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        Northpool.WaitUntilReady()
-        binding.occupancy.text = Northpool.all_stake.toString()
-        binding.hashrate.text = RoundHashrate(Northpool.hashrate)
-        binding.btcEarnings.text = RoundBTC((Northpool.pool_earnings / Northpool.all_stake).toFloat(), 6)
-        binding.myStake.text = Northpool.my_stake.toString()
+        val poolId = PoolsService.northpool_pool_id
+
+        SessionManager.poolListInfo.observe(viewLifecycleOwner) {
+            binding.occupancy.text = it[poolId - 1].nbStakedNft.toString()
+            binding.hashrate.text = RoundHashrate(it[poolId - 1].hashrate)
+            binding.btcEarnings.text =
+                RoundBTC((it[poolId - 1].poolEarnings / it[poolId - 1].nbStakedNft).toFloat(), 6)
+            binding.myStake.text = it[poolId - 1].nbStakedNftUser.toString()
+        }
+
         // Inflate the layout for this fragment
         // inflater.inflate(R.layout.fragment_origin, container, false)
         return root

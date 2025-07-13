@@ -5,9 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
 import com.example.startmining.Datas
-import com.example.startmining.DateNextPayout
 import com.example.startmining.R
-import com.example.startmining.RoundBTC
 import java.util.Calendar
 
 
@@ -46,7 +44,7 @@ internal fun updateAppWidget(
     val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
     val minutes = calendar[Calendar.MINUTE]
 
-    val refresh_thread = Thread { Datas.RefreshStake() }
+    /*val refresh_thread = Thread { Datas.RefreshStake() }
 
     refresh_thread.start()
     refresh_thread.join()
@@ -55,7 +53,7 @@ internal fun updateAppWidget(
     views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards, 7))
     views.setTextViewText(R.id.widget_next_payout, DateNextPayout())
     views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings, 7))
-    views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")
+    views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")*/
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

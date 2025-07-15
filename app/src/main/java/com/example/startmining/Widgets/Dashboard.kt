@@ -5,7 +5,10 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
 import com.example.startmining.Datas
+import com.example.startmining.DateNextPayout
 import com.example.startmining.R
+import com.example.startmining.RoundBTC
+import com.example.startmining.SessionManager
 import java.util.Calendar
 
 
@@ -31,30 +34,28 @@ class Dashboard : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 }
-
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    // Construct the RemoteViews object
-    val views = RemoteViews(context.packageName, R.layout.dashboard_widgets)
+    SessionManager.updateBalance(Datas.btc_wallet, context)
+    SessionManager.updatePoolsInfo(Datas.eth_wallet, context)
+    // Wait for 5 seconds to ensure data is loaded
+    Thread.sleep(5000)
+    val views = RemoteViews(context.packageName, R.layout.dashboard_widget)
+
+    val balance = WidgetDataRepository.getValue(context, WidgetDataKey.BALANCE).toDouble()
+    val earnings = WidgetDataRepository.getValue(context, WidgetDataKey.EARNINGS).toDouble()
+
+    views.setTextViewText(R.id.widget_live_rewards, RoundBTC(balance, 6))
+    views.setTextViewText(R.id.widget_earnings, RoundBTC(earnings))
+    views.setTextViewText(R.id.widget_next_payout, DateNextPayout(balance, earnings))
 
     val calendar = Calendar.getInstance()
-    val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
-    val minutes = calendar[Calendar.MINUTE]
+    val hour24 = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+    views.setTextViewText(R.id.sync_date, "$hour24:$minute")
 
-    /*val refresh_thread = Thread { Datas.RefreshStake() }
-
-    refresh_thread.start()
-    refresh_thread.join()
-
-    Datas.RefreshTextValue()
-    views.setTextViewText(R.id.widget_live_rewards, RoundBTC(Datas.live_rewards, 7))
-    views.setTextViewText(R.id.widget_next_payout, DateNextPayout())
-    views.setTextViewText(R.id.widget_earnings, RoundBTC(Datas.earnings, 7))
-    views.setTextViewText(R.id.textView5, "${hour24hrs}:${minutes}")*/
-
-    // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.Semaphore
 
 object HttpManager {
     private val client = OkHttpClient()
-    private val semaphore = Semaphore(5)
+    private val semaphore = Semaphore(7)
     private val json = Json { ignoreUnknownKeys = true }
 
     suspend fun <T> get(url: String, deserializer: DeserializationStrategy<T>): T {

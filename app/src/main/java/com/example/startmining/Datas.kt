@@ -12,12 +12,12 @@ object Datas {
     fun LoadWalletsAddress(application: Context?) {
         val sharedPref =
             application?.getSharedPreferences(
-                application.getString(R.string.file_name),
+                Constants.PREFS_NAME,
                 Context.MODE_PRIVATE
             )
         this.btc_wallet = sharedPref!!.getString(
             application.getString(R.string.btc_address),
-            "0x0000000000000000000000000000000000000000"
+            "bc0000000000000000000000000000000000000000"
         ).toString()
         this.eth_wallet = sharedPref.getString(
             application.getString(R.string.eth_address),
@@ -27,7 +27,7 @@ object Datas {
 
     fun SaveWalletsAddress(application: Context?, btc_address: String, eth_address: String) {
         val sharedPref = application?.getSharedPreferences(
-            application.getString(R.string.file_name),
+            Constants.PREFS_NAME,
             Context.MODE_PRIVATE
         )
         if (sharedPref != null) {

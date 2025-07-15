@@ -1,8 +1,11 @@
 package com.example.startmining
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.startmining.Widgets.WidgetDataKey
+import com.example.startmining.Widgets.WidgetDataRepository
 import com.example.startmining.network.cruxpool.CruxpoolService
 import com.example.startmining.network.cruxpool.balance.BalanceWrapper
 import com.example.startmining.network.pools.PoolInfo
@@ -29,11 +32,14 @@ object SessionManager {
      * Update the user's balance by fetching it from the Cruxpool API.
      * @param address The user's address to fetch balance information.
      */
-    fun updateBalance(address: String) {
+    fun updateBalance(address: String, context: Context?=null) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val balanceWrapper: BalanceWrapper = CruxpoolService.getBalance(address)
-                _balance.postValue(balanceWrapper.data.balance / 10.0.pow(8.0))
+                val __balance = balanceWrapper.data.balance / 10.0.pow(8.0)
+                _balance.postValue(__balance)
+                if (context != null)
+                    WidgetDataRepository.setValue(context, WidgetDataKey.BALANCE, __balance.toString())
             } catch (e: Exception) {
                 Log.e("SessionManager", "Error fetching balance: ${e.message}")
             }
@@ -66,14 +72,14 @@ object SessionManager {
      * Update the list of pools and calculate user earnings based on the pools.
      * @param address The user's address to fetch pool information.
      */
-    fun updatePoolsInfo(address: String) {
+    fun updatePoolsInfo(address: String, context: Context? = null) {
         CoroutineScope(Dispatchers.IO).launch {
             val poolsInfo = PoolsService.updatePoolsInfo(address)
             _poolListInfo.postValue(poolsInfo)
-            for (pool in poolsInfo) {
-                val currentEarnings = _userEarnings.value ?: 0.0
-                _userEarnings.postValue(currentEarnings + pool.userEarnings)
-            }
+            val __userEarnings = poolsInfo.sumOf { it.userEarnings }
+            _userEarnings.postValue(__userEarnings)
+            if (context != null)
+                WidgetDataRepository.setValue(context, WidgetDataKey.EARNINGS, __userEarnings.toString())
         }
     }
 }

@@ -14,5 +14,4 @@
     <string name="app_widget_description">Widget to track your reward and your date of payout</string>
     <string name="btc_address">btc_address</string>
     <string name="eth_address">eth_address</string>
-    <string name="file_name">pref</string>
 </resources>

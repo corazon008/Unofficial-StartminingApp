@@ -1,6 +1,7 @@
 package com.example.startmining.network
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.json.Json
@@ -10,29 +11,44 @@ import java.util.concurrent.Semaphore
 
 object HttpManager {
     private val client = OkHttpClient()
-    private val semaphore = Semaphore(7)
+    private val semaphore = Semaphore(1)
+
     private val json = Json { ignoreUnknownKeys = true }
 
-    suspend fun <T> get(url: String, deserializer: DeserializationStrategy<T>): T {
+    suspend fun <T> get(
+        url: String,
+        deserializer: DeserializationStrategy<T>,
+        retries: Int = 3
+    ): T {
         return withContext(Dispatchers.IO) {
-            semaphore.acquire()
-            try {
-                val request = Request.Builder().url(url).build()
-                val response = client.newCall(request).execute()
+            var attempt = 0
+            var lastException: Exception? = null
 
-                if (!response.isSuccessful) {
-                    throw Exception("HTTP ${response.code} ${response.message}")
+            while (attempt < retries) {
+                semaphore.acquire()
+                try {
+                    val request = Request.Builder().url(url).build()
+                    val response = client.newCall(request).execute()
+
+                    if (!response.isSuccessful) {
+                        throw Exception("HTTP ${response.code} ${response.message}")
+                    }
+
+                    val body = response.body.string()
+
+                    return@withContext json.decodeFromString(deserializer, body)
+                } catch (e: Exception) {
+                    lastException = e
+                    attempt++
+                    if (attempt < retries) {
+                        delay(1000L * attempt) // Exponential backoff
+                    }
+                } finally {
+                    semaphore.release()
                 }
-
-                val body = response.body?.string()
-                    ?: throw Exception("Empty response body")
-
-                json.decodeFromString(deserializer, body)
-            } catch (e: Exception) {
-                throw RuntimeException("HTTP request failed: ${e.message}", e)
-            } finally {
-                semaphore.release()
             }
+
+            throw RuntimeException("HTTP request failed after $retries retries", lastException)
         }
     }
 }

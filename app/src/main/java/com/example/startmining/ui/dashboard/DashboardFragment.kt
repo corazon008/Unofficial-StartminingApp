@@ -12,6 +12,7 @@ import com.example.startmining.DaysToReachedPayout
 import com.example.startmining.RoundBTC
 import com.example.startmining.SessionManager
 import com.example.startmining.databinding.FragmentDashboardBinding
+import com.example.startmining.network.pools.PoolsService
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -24,6 +25,8 @@ class DashboardFragment : Fragment() {
     ): View {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        PoolsService.initialize(requireContext())
 
         SessionManager.balance.observe(viewLifecycleOwner) {
             val balance: Double = it

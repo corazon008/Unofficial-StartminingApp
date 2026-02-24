@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.startmining.R
 import com.example.startmining.RoundBTC
 import com.example.startmining.RoundHashrate
 import com.example.startmining.SessionManager
@@ -21,7 +22,7 @@ class HorizonFragment : Fragment() {
         _binding = FragmentHorizonBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val poolId = PoolsService.horizon_pool_id
+        val poolId: Int = context?.resources?.getInteger(R.integer.horizon_id) ?: -1
 
         SessionManager.poolListInfo.observe(viewLifecycleOwner) {
             binding.occupancy.text = it[poolId-1].nbStakedNft.toString()

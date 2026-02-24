@@ -1,5 +1,7 @@
 package com.example.startmining.network.pools
 
+import com.example.startmining.R
+import android.content.Context
 import android.util.Log
 import com.example.startmining.network.cruxpool.CruxpoolService
 import com.example.startmining.network.etherscan.EtherscanService
@@ -13,23 +15,23 @@ import com.example.startmining.network.etherscan.EtherscanService
 5 - Horizon
  */
 
+/**
+ * PoolsService is responsible for managing the pool information for all pools.
+ * It provides functions to initialize the pool addresses and update the pool information by fetching it from the Cruxpool API and the Etherscan API.
+ */
 object PoolsService {
-    private val origin_address = "bc1qdzcgvennnjzv4jry38s0krjtl3x9n374302c75"
-    var origin_pool_id: Int = 1
-        private set
+    private lateinit var poolAddresses: List<String>
+    private val poolIds = listOf(1, 2, 3, 4, 5)
 
-    private val genesis_address = "bc1p94llwnug0zv9zvk8lj9g43s6ul5nssf9yl5pn8sdlyqj3rdy90qq34ck00"
-    var genesis_pool_id: Int = 2
-        private set
-    private val northpool_address = "bc1qyjp7kadrtr8j7gvvs9jej9c790jpmal4cwehle"
-    var northpool_pool_id: Int = 3
-        private set
-    private val pulse_address = "bc1qaj5lgj8zmhap0vquttpud3dhat43y8azplgzqf"
-    var pulse_pool_id: Int = 4
-        private set
-    private val horizon_address = "bc1q0tjj47smwcu7fplekr79p63hdky5x7x4y4e54e"
-    var horizon_pool_id: Int = 5
-        private set
+    fun initialize(context: Context) {
+        poolAddresses = listOf(
+            context.getString(R.string.origin_address),
+            context.getString(R.string.genesis_address),
+            context.getString(R.string.northpool_address),
+            context.getString(R.string.pulse_address),
+            context.getString(R.string.horizon_address)
+        )
+    }
 
     /**
      * This function updates the pool information for all pools.
@@ -39,14 +41,12 @@ object PoolsService {
     suspend fun updatePoolsInfo(userAddress: String): MutableList<PoolInfo> {
         val poolsInfo = mutableListOf<PoolInfo>()
 
-        try {
-            poolsInfo.add(updatePoolInfo(userAddress, origin_address, origin_pool_id))
-            poolsInfo.add(updatePoolInfo(userAddress, genesis_address, genesis_pool_id))
-            poolsInfo.add(updatePoolInfo(userAddress, northpool_address, northpool_pool_id))
-            poolsInfo.add(updatePoolInfo(userAddress, pulse_address, pulse_pool_id))
-            poolsInfo.add(updatePoolInfo(userAddress, horizon_address, horizon_pool_id))
-        } catch (e: Exception) {
-            Log.e("PoolsService", "Error updating pool info: ${e.message}")
+        poolAddresses.zip(poolIds).forEach { (address, id) ->
+            try {
+                poolsInfo.add(updatePoolInfo(userAddress, address, id))
+            } catch (e: Exception) {
+                Log.e("PoolsService", "Error updating pool info for pool ID $id: ${e.message}")
+            }
         }
 
         return poolsInfo
@@ -64,7 +64,7 @@ object PoolsService {
         poolAddress: String,
         poolId: Int
     ): PoolInfo {
-        val poolInfo: PoolInfo = PoolInfo(
+        val poolInfo = PoolInfo(
             address = poolAddress,
             poolId = poolId,
         )

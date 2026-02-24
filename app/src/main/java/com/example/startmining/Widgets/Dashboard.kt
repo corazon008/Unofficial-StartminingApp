@@ -53,6 +53,8 @@ internal fun updateAppWidget(
     val minute = calendar.get(Calendar.MINUTE)
     views.setTextViewText(R.id.sync_date, "$hour24:$minute")
 
+    Datas.LoadWalletsAddress(context)
+
     var balance: Double? = null
     var earnings: Double? = null
 

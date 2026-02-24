@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="origin_address">bc1qdzcgvennnjzv4jry38s0krjtl3x9n374302c75</string>
+    <integer name="origin_id">1</integer>
+    <string name="genesis_address">bc1p94llwnug0zv9zvk8lj9g43s6ul5nssf9yl5pn8sdlyqj3rdy90qq34ck00</string>
+    <integer name="genesis_id">2</integer>
+    <string name="northpool_address">bc1qyjp7kadrtr8j7gvvs9jej9c790jpmal4cwehle</string>
+    <integer name="northpool_id">3</integer>
+    <string name="pulse_address">bc1qaj5lgj8zmhap0vquttpud3dhat43y8azplgzqf</string>
+    <integer name="pulse_id">4</integer>
+    <string name="horizon_address">bc1q0tjj47smwcu7fplekr79p63hdky5x7x4y4e54e</string>
+    <integer name="horizon_id">5</integer>
+</resources>

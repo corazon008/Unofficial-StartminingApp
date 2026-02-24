@@ -17,11 +17,11 @@ object Datas {
             )
         this.btc_wallet = sharedPref!!.getString(
             application.getString(R.string.btc_address),
-            "bc0000000000000000000000000000000000000000"
+            "bc00..."
         ).toString()
         this.eth_wallet = sharedPref.getString(
             application.getString(R.string.eth_address),
-            "0x0000000000000000000000000000000000000000"
+            "0x00..."
         ).toString()
     }
 

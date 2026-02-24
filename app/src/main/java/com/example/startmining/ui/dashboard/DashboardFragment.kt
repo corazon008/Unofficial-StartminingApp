@@ -12,7 +12,6 @@ import com.example.startmining.DaysToReachedPayout
 import com.example.startmining.RoundBTC
 import com.example.startmining.SessionManager
 import com.example.startmining.databinding.FragmentDashboardBinding
-import com.example.startmining.network.pools.PoolsService
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -25,8 +24,6 @@ class DashboardFragment : Fragment() {
     ): View {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        PoolsService.initialize(requireContext())
 
         SessionManager.balance.observe(viewLifecycleOwner) {
             val balance: Double = it
@@ -45,7 +42,7 @@ class DashboardFragment : Fragment() {
             binding.reachedPayout.text = DaysToReachedPayout(it)
         }
 
-        /*
+        /* TODO :
         binding.btcShouldHave.text = RoundBTC(Bitcoin.btc_should_have)
         binding.btcShouldHaveProgress.progress = (Datas.total_payout / Bitcoin.btc_should_have * 100).toInt()
         binding.dateRoiWithHalving.text = ComputeDateRoi(halving = true)

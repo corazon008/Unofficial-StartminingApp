@@ -12,10 +12,9 @@ object EtherscanService {
                 ethAddress.substring(2)
             }"
         )
-        Log.i("EtherscanService", "getUserStakedNft for $poolId : url=${url}")
 
         val nbStakedNftWrapper = HttpManager.get(url, NbStakedNftWrapper.serializer())
-        var data =
+        val data =
             nbStakedNftWrapper.result.substring(2) // Remove the first two characters - i.e. "0x"
         val nft = mutableListOf<String>()
         var index = 0
@@ -24,17 +23,19 @@ object EtherscanService {
             index += 64
         }
 
-        return nft.size - 2 // because it seems that there is always 2 more elements
+        val size = nft.size - 2 // because it seems that there is always 2 more elements
+
+        Log.i("EtherscanService", "getUserStakedNft for $poolId with $size staked NFT url=${url}")
+
+        return size
     }
 
     suspend fun getAllStakedNft(poolId: Int): Int {
         val url =
             build_eth_url("data" to "0x03501951000000000000000000000000000000000000000000000000000000000000000${poolId}")
 
-        Log.i("EtherscanService", "getAllStakedNft for $poolId : url=${url}")
-
         val allStakedNftWrapper = HttpManager.get(url, NbStakedNftWrapper.serializer())
-        var data =
+        val data =
             allStakedNftWrapper.result.substring(2) // Remove the first two characters - i.e. "0x"
         val nft = mutableListOf<String>()
         var index = 0
@@ -43,6 +44,10 @@ object EtherscanService {
             index += 64
         }
 
-        return nft.size - 2 // because it seems that there is always 2 more elements
+        val size = nft.size - 2 // because it seems that there is always 2 more elements
+
+        Log.i("EtherscanService", "getAllStakedNft for $poolId with $size staked NFT url=${url}")
+
+        return size
     }
 }

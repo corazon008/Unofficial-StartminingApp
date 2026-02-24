@@ -24,6 +24,10 @@ object EtherscanService {
         }
 
         val size = nft.size - 2 // because it seems that there is always 2 more elements
+        if (size < 0) {
+            Log.e("EtherscanService", "getUserStakedNft for $poolId: Error parsing staked NFT data: data=${nbStakedNftWrapper.result} url=${url}")
+            return 0
+        }
 
         Log.i("EtherscanService", "getUserStakedNft for $poolId with $size staked NFT url=${url}")
 
@@ -45,6 +49,10 @@ object EtherscanService {
         }
 
         val size = nft.size - 2 // because it seems that there is always 2 more elements
+        if (size < 0) {
+            Log.e("EtherscanService", "getAllStakedNft for $poolId: Error parsing staked NFT data: data=${allStakedNftWrapper.result} url=${url}")
+            return 0
+        }
 
         Log.i("EtherscanService", "getAllStakedNft for $poolId with $size staked NFT url=${url}")
 

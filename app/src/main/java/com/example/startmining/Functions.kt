@@ -43,7 +43,7 @@ fun DateNextPayout(balance: Double, earnings: Double): String {
 
     val days2wait = (Constants.PAYMENT_THRESHOLD - balance) / earnings
     val payout_day = LocalDate.from(LocalDate.now()).plusDays(days2wait.toLong())
-    return "${payout_day.dayOfMonth}/${payout_day.monthValue}"
+    return "${payout_day.dayOfMonth}/${payout_day.monthValue}/${payout_day.year}"
 }
 
 fun DaysToReachedPayout(earnings: Double): String {

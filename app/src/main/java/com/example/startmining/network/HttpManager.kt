@@ -10,15 +10,19 @@ import okhttp3.Request
 import java.util.concurrent.Semaphore
 
 object HttpManager {
-    private val client = OkHttpClient()
-    private val semaphore = Semaphore(1)
+    private val client = OkHttpClient.Builder()
+        .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+        .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+        .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+        .build()
+    private val semaphore = Semaphore(4)
 
     private val json = Json { ignoreUnknownKeys = true }
 
     suspend fun <T> get(
         url: String,
         deserializer: DeserializationStrategy<T>,
-        retries: Int = 3
+        retries: Int = 5
     ): T {
         return withContext(Dispatchers.IO) {
             var attempt = 0
@@ -35,6 +39,10 @@ object HttpManager {
                     }
 
                     val body = response.body.string()
+
+                    if ("limit" in body.lowercase()) {
+                        throw Exception("API rate limit reached")
+                    }
 
                     return@withContext json.decodeFromString(deserializer, body)
                 } catch (e: Exception) {

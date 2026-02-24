@@ -1,11 +1,8 @@
 package com.example.startmining
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.startmining.Widgets.WidgetDataKey
-import com.example.startmining.Widgets.WidgetDataRepository
 import com.example.startmining.network.cruxpool.CruxpoolService
 import com.example.startmining.network.cruxpool.balance.BalanceWrapper
 import com.example.startmining.network.pools.PoolInfo
@@ -14,6 +11,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.pow
+
+/**
+ * SessionManager is responsible for managing the user's session data, including balance, payments, user earnings, and pool information.
+ * It provides functions to update this data by fetching it from the Cruxpool API and the PoolsService.
+ */
 
 object SessionManager {
     private val _balance = MutableLiveData<Double>()
@@ -32,14 +34,12 @@ object SessionManager {
      * Update the user's balance by fetching it from the Cruxpool API.
      * @param address The user's address to fetch balance information.
      */
-    fun updateBalance(address: String, context: Context?=null) {
+    fun updateBalance(address: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val balanceWrapper: BalanceWrapper = CruxpoolService.getBalance(address)
                 val __balance = balanceWrapper.data.balance / 10.0.pow(8.0)
                 _balance.postValue(__balance)
-                if (context != null)
-                    WidgetDataRepository.setValue(context, WidgetDataKey.BALANCE, __balance.toString())
             } catch (e: Exception) {
                 Log.e("SessionManager", "Error fetching balance: ${e.message}")
             }
@@ -70,16 +70,14 @@ object SessionManager {
 
     /**
      * Update the list of pools and calculate user earnings based on the pools.
-     * @param address The user's address to fetch pool information.
+     * @param userAddress The user's address to fetch pool information.
      */
-    fun updatePoolsInfo(address: String, context: Context? = null) {
+    fun updatePoolsInfo(userAddress: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val poolsInfo = PoolsService.updatePoolsInfo(address)
+            val poolsInfo = PoolsService.updatePoolsInfo(userAddress)
             _poolListInfo.postValue(poolsInfo)
             val __userEarnings = poolsInfo.sumOf { it.userEarnings }
             _userEarnings.postValue(__userEarnings)
-            if (context != null)
-                WidgetDataRepository.setValue(context, WidgetDataKey.EARNINGS, __userEarnings.toString())
         }
     }
 }

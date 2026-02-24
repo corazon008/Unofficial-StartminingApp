@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.example.startmining.network.cruxpool.CruxpoolService
 import com.example.startmining.network.etherscan.EtherscanService
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 
 /* Pool Order :
@@ -22,6 +24,7 @@ import com.example.startmining.network.etherscan.EtherscanService
 object PoolsService {
     private lateinit var poolAddresses: List<String>
     private val poolIds = listOf(1, 2, 3, 4, 5)
+    private val mutex = Mutex()
 
     fun initialize(context: Context) {
         poolAddresses = listOf(
@@ -43,7 +46,10 @@ object PoolsService {
 
         poolAddresses.zip(poolIds).forEach { (address, id) ->
             try {
-                poolsInfo.add(updatePoolInfo(userAddress, address, id))
+                val poolInfo = updatePoolInfo(userAddress, address, id)
+                mutex.withLock {
+                    poolsInfo.add(poolInfo)
+                }
             } catch (e: Exception) {
                 Log.e("PoolsService", "Error updating pool info for pool ID $id: ${e.message}")
             }

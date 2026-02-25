@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -13,7 +12,7 @@ android {
         minSdk = 35
         targetSdk = 36
         versionCode = 3
-        versionName = "3.2"
+        versionName = "3.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,8 +35,6 @@ android {
         dataBinding = true
         viewBinding = true
     }
-
-    buildToolsVersion = "35.0.0"
 }
 
 dependencies {

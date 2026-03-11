@@ -11,8 +11,8 @@ android {
         applicationId = "com.corazon.startmining"
         minSdk = 35
         targetSdk = 36
-        versionCode = 3
-        versionName = "3.3"
+        versionCode = 4
+        versionName = "3.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
